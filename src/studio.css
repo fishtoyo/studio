@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+/* 工作室頁面專用主題（與履歷頁 src/index.css 完全獨立） */
+@theme {
+  /* 中文：jf open 粉圓（Huninn，OFL 授權）；英數：Quicksand 圓體 */
+  --font-sans: "Quicksand", "Huninn", "Noto Sans TC", system-ui, sans-serif;
+  --font-display: "Quicksand", "Huninn", sans-serif;
+  --font-brand: "Quicksand", sans-serif;
+
+  --color-ink: #0b1b2b;      /* 主要文字 */
+  --color-navy: #082642;     /* 品牌深藍（沿用履歷主色） */
+  --color-navy-2: #0c3862;
+  --color-brand: #009bd0;    /* 品牌亮藍 */
+  --color-brand-dark: #0381ab;
+  --color-paper: #f4f7fa;    /* 淺色區塊底 */
+  --color-line: #e3e9ef;     /* 分隔線 */
+  --color-muted: #5b6b7b;    /* 次要文字 */
+}
+
+@layer base {
+  html {
+    /* 平滑捲動與錨點由 Lenis 處理（src/studio/useSmoothScroll.ts），這裡不設 scroll-behavior 以免互相干擾 */
+    scroll-padding-top: 4.5rem; /* 鍵盤或原生錨點跳轉時避開固定 header */
+  }
+  body {
+    @apply bg-white text-ink font-sans antialiased;
+  }
+  /* Tailwind 4 預設 button 游標是箭頭，全站統一改成手指（停用中的按鈕除外） */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+  ::selection {
+    @apply bg-brand text-white;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-300 px-5 md:px-8;
+  }
+  .section {
+    @apply py-20 md:py-28;
+  }
+  /* 主選單會定位到的區塊：電腦／平板版高度至少一個畫面（扣掉固定 header），內容垂直置中。
+     點選單定位後，畫面裡只會有這一個區塊，不會露出上下區塊的底色或內容。 */
+  .section-screen {
+    @apply flex flex-col justify-center md:min-h-[calc(100svh-4.5rem)];
+  }
+  .eyebrow {
+    @apply font-display text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-dark;
+  }
+  .heading {
+    @apply mt-3 text-[28px] md:text-[40px] font-bold leading-tight tracking-tight text-ink;
+  }
+  .lead {
+    @apply mt-4 text-[15px] md:text-[17px] leading-relaxed text-muted;
+  }
+  .btn {
+    --btn-px: 2rem; /* 左右內距，hover 時以此為基準往外延長 */
+    @apply inline-flex items-center justify-center gap-2.5 rounded-full py-4 text-[17px] font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+    padding-inline: var(--btn-px);
+    transition-property: color, background-color, border-color, box-shadow, filter, opacity, padding, margin, gap;
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* 小尺寸按鈕（header 用） */
+  .btn-sm {
+    --btn-px: 1.25rem;
+    @apply py-2.5 text-[15px];
+  }
+  .btn-primary {
+    @apply bg-brand text-white shadow-[0_8px_24px_-8px_rgba(0,155,208,0.7)] hover:bg-brand-dark;
+  }
+  .btn-ghost {
+    @apply border border-ink/15 text-ink hover:border-brand hover:text-brand;
+  }
+  .btn-outline {
+    @apply border border-ink/15 text-ink hover:border-brand hover:text-brand;
+  }
+  /* ── 按鈕 hover：往左右延長 ──
+     左右各多 6px 內距、再用負外距抵銷，按鈕視覺上變長但不會推動旁邊的元素；
+     有箭頭／icon 的按鈕再拉開文字與箭頭的距離，箭頭順勢往右滑出。
+     只在有滑鼠的裝置啟用（手機的全寬按鈕不適合左右延伸）。 */
+  @media (hover: hover) and (pointer: fine) {
+    .btn:not(:disabled):hover,
+    .group:hover > .btn {
+      padding-inline: calc(var(--btn-px) + 6px);
+      margin-inline: -6px;
+    }
+    .btn:not(:disabled):is(:has(> svg), :has(> .icon)):hover,
+    .group:hover > .btn:is(:has(> svg), :has(> .icon)) {
+      gap: calc(0.625rem + 6px);
+      margin-right: -12px;
+    }
+  }
+  /* ── 卡片「icon + 標題同一排，下方描述」的共用尺寸（AI 快速架站、服務項目） ── */
+  .card-head {
+    @apply flex items-center gap-3;
+  }
+  .card-icon {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl;
+  }
+  .card-icon > .icon {
+    font-size: 24px;
+  }
+  .card-title {
+    @apply text-[20px] font-bold text-ink;
+  }
+  .card-desc {
+    @apply mt-3 text-[16px] leading-relaxed text-muted;
+  }
+  /* ── 輪播（精選作品） ── */
+  /* 卡片 hover 會上浮與出現陰影，上下預留空間避免被裁掉（左右不留，否則會露出下一張的邊） */
+  .works-swiper {
+    margin-top: -16px;
+    padding: 16px 0 32px;
+  }
+  .slider-arrow {
+    @apply flex h-12 w-12 items-center justify-center rounded-full border border-ink/15 text-ink transition duration-200 hover:border-brand hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+  .slider-arrow.is-disabled {
+    @apply pointer-events-none opacity-30;
+  }
+  .slider-dots {
+    @apply flex items-center justify-center gap-2;
+  }
+  /* 圓點：一般是小圓點，目前所在的那一組拉長成膠囊 */
+  .slider-dot {
+    @apply block h-2 w-2 cursor-pointer rounded-full bg-ink/15 transition-all duration-300 hover:bg-ink/30;
+  }
+  .slider-dot.is-active {
+    @apply w-8 bg-brand;
+  }
+  /* ── 關於：品牌卡深藍漸層緩慢流動（循環） ── */
+  .about-card {
+    background: linear-gradient(140deg, #082642 0%, #0c3862 30%, #0381ab 55%, #0c3862 80%, #082642 100%);
+    background-size: 260% 260%;
+    animation: about-gradient 12s ease-in-out infinite alternate;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .about-card { animation: none; }
+  }
+  .field {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-ink placeholder:text-muted/60 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15;
+  }
+  .icon {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@keyframes about-gradient {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 60%; }
+  100% { background-position: 40% 100%; }
+}
