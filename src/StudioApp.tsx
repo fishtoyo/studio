@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion, MotionConfig, AnimatePresence, useInView } from 'framer-motion'
 import {
   studio, nav, hero, stats, aiBuild, services, webCard, works, statusLabel, type ShowcaseType,
-  process, about, faqs, contact, type Work,
+  process, about, faqs, contact, servicesHead, type Work,
 } from './content'
 import { ContactForm } from './components/ContactForm'
 import { useSmoothScroll } from './useSmoothScroll'
@@ -512,7 +512,7 @@ function Services() {
   return (
     <section id="services" className="section section-screen">
       <div className="container-x">
-        <SectionHead eyebrow="Services" title="我們能為你做什麼" desc="不論你是需要一個完整網站的品牌主，還是需要可靠前端夥伴的設計團隊，都能找到合適的合作方式。" />
+        <SectionHead eyebrow="One-Stop Service" title={servicesHead.title} desc={servicesHead.desc} />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.title} delay={(i % 3) * 0.08}>
@@ -1338,7 +1338,7 @@ function About() {
 
               {/* 下：服務與地點 */}
               <div className="relative">
-                <p className="font-brand text-[13px] tracking-[0.12em] text-white/80">WEB DESIGN &amp; FRONT-END</p>
+                <p className="font-brand text-[13px] tracking-[0.12em] text-white/80">ONE-STOP DIGITAL STUDIO</p>
                 <p className="mt-2 flex items-center gap-1.5 text-[13px] text-white/70">
                   <span className="icon text-[16px]!">location_on</span>
                   {studio.location}

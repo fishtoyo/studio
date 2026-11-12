@@ -2,7 +2,7 @@
 
 export const studio = {
   name: 'Fish Studio',
-  tagline: 'Web Design & Front-end Studio',
+  tagline: 'One-Stop Digital Studio',
   // 聯絡資訊：留空的欄位不會顯示
   email: '',
   location: '台中・全台遠端合作',
@@ -15,7 +15,7 @@ export const studio = {
 
 export const nav = [
   { id: 'ai', label: 'AI 快速架站' },
-  { id: 'services', label: '服務項目' },
+  { id: 'services', label: '一條龍服務' },
   { id: 'card', label: '網站類型' },
   { id: 'works', label: '精選作品' },
   { id: 'process', label: '合作流程' },
@@ -24,27 +24,27 @@ export const nav = [
 ]
 
 export const hero = {
-  eyebrow: 'Web Design & Front-end Studio',
-  title: ['把好的設計，', '做成好用的網站。'],
-  desc: '從形象官網、設計稿 1:1 切版到前端互動開發，以 16 年實戰經驗，交付好看、好維護、跨裝置都穩定的網站。',
-  primary: '洽談合作',
+  eyebrow: 'One-Stop Digital Studio',
+  title: ['從網站到金流，', '一個窗口全包辦。'],
+  desc: '品牌網站設計、線上金流、LINE 官方帳號、社群串接到網域主機，不用分別找設計師、工程師和各家廠商。告訴我們你想做的生意，其他交給 Fish Studio 一次整合到好。',
+  primary: '免費諮詢',
   secondary: '看看作品',
   // 右側示意圖上輪播切換的能力標籤（color 為 icon 顏色）
   badges: [
-    { icon: 'check_circle', text: 'Pixel-Perfect 1:1', color: '#10b981' },
+    { icon: 'palette', text: '品牌網站設計', color: '#0ea5e9' },
+    { icon: 'credit_card', text: '金流串接', color: '#10b981' },
+    { icon: 'chat', text: 'LINE 官方帳號', color: '#22c55e' },
+    { icon: 'share', text: '社群整合', color: '#f43f5e' },
     { icon: 'auto_awesome', text: 'AI 快速架站', color: '#8b5cf6' },
-    { icon: 'devices', text: 'RWD 響應式設計', color: '#0ea5e9' },
-    { icon: 'speed', text: '效能優化', color: '#f59e0b' },
-    { icon: 'travel_explore', text: 'SEO 友善結構', color: '#f43f5e' },
-    { icon: 'language', text: '跨瀏覽器相容', color: '#6366f1' },
+    { icon: 'travel_explore', text: 'SEO 友善結構', color: '#f59e0b' },
   ],
 }
 
 export const stats = [
-  { value: '16', unit: '年', label: '主理人前端實戰經驗' },
+  { value: '1', unit: '個', label: '窗口從規劃到上線' },
+  { value: '16', unit: '年', label: '主理人網站實戰經驗' },
   { value: '7', unit: '件', label: '自主開發產品' },
   { value: '12', unit: '年', label: '遠端協作經驗' },
-  { value: '1:1', unit: '', label: '設計稿還原精準度' },
 ]
 
 // AI 快速架站（Hero 下方的優勢強調區）
@@ -69,42 +69,48 @@ export const aiBuild = {
   ],
 }
 
+// 一條龍服務：網站上線需要的每一段，都能交給同一個窗口
+export const servicesHead = {
+  title: '從網站到接單，一條龍全包辦',
+  desc: '架網站只是第一步，金流、LINE、社群、網域主機都要串起來，客人才找得到你、買得到東西。這些我們一次規劃、一起完成，你只要專心經營生意。',
+}
+
 export const services = [
   {
-    icon: 'web',
-    title: '形象官網設計製作',
-    desc: '從架構規劃、視覺設計到上線，打造符合品牌調性的企業官網與活動頁，讓第一眼印象就說服你的客戶。',
-    tags: ['企業官網', '活動頁', 'Landing Page'],
+    icon: 'palette',
+    title: '品牌網站設計',
+    desc: '依品牌調性規劃架構與視覺，形象官網、活動頁、購物網站都能做，手機電腦都好看，客人看完就想聯絡你。',
+    tags: ['形象官網', '購物網站', 'RWD'],
   },
   {
-    icon: 'design_services',
-    title: '設計稿 1:1 切版',
-    desc: 'Figma / PSD 精準轉為 HTML，RWD 響應式、跨瀏覽器，結構乾淨好接後端，適合設計公司與工程團隊外包合作。',
-    tags: ['Figma', 'RWD', 'SCSS'],
+    icon: 'credit_card',
+    title: '金流與電商串接',
+    desc: '串接綠界、藍新等金流，信用卡、ATM、超商代碼都能收；購物車、會員、訂單管理一次建好，網站直接就能接單收款。',
+    tags: ['線上刷卡', '超商付款', '訂單管理'],
   },
   {
-    icon: 'code',
-    title: '前端互動開發',
-    desc: '以 React、Vue、TypeScript 開發元件化介面，搭配 GSAP 動態，兼顧體驗與效能，元件可重複使用、日後擴充更省力。',
-    tags: ['React', 'Vue', 'GSAP'],
+    icon: 'chat',
+    title: 'LINE 官方帳號',
+    desc: '協助開通與設定官方帳號，規劃圖文選單、歡迎訊息與自動回覆，並和網站互相導流，讓客人加好友後就能預約、詢問、回購。',
+    tags: ['圖文選單', '自動回覆', 'LINE 登入'],
   },
   {
-    icon: 'autorenew',
-    title: '網站改版與優化',
-    desc: '舊站翻新、手機版重整、載入速度與 SEO 基礎優化，保留原有內容與流量，讓既有網站重新變得好用。',
-    tags: ['改版', '效能', 'SEO'],
+    icon: 'share',
+    title: '社群整合',
+    desc: 'Facebook、Instagram 粉專建置與網站串接，設定分享預覽圖、Meta Pixel 與 Google Analytics，社群流量導得進來、成效看得見。',
+    tags: ['FB／IG', '分享預覽', '數據追蹤'],
   },
   {
-    icon: 'build',
-    title: '長期維護與合作',
-    desc: '上線後的內容調整、功能擴充與問題排除，可依月或依需求彈性合作，有固定窗口隨時找得到人。',
-    tags: ['維護', '擴充', '技術支援'],
+    icon: 'dns',
+    title: '網域主機與上線',
+    desc: '網域註冊、主機、SSL 安全憑證、公司信箱與 Google 商家一次處理，帳號都登記在你名下，不用自己研究一堆設定。',
+    tags: ['網域', 'SSL', 'Google 商家'],
   },
   {
-    icon: 'handshake',
-    title: '團隊前端外包',
-    desc: '加入你的專案團隊，配合既有後端、版本控管與開發流程，遠端穩定交付，進度與溝通即時透明。',
-    tags: ['遠端協作', 'Git', '後端串接'],
+    icon: 'trending_up',
+    title: '維護與持續優化',
+    desc: '上線後的內容更新、功能擴充、SEO 與速度優化，可依月或依需求彈性合作，有固定窗口隨時找得到人。',
+    tags: ['內容更新', 'SEO', '功能擴充'],
   },
 ]
 
@@ -127,7 +133,7 @@ export const webCard = {
       id: 'shop' as ShowcaseType,
       label: '購物會員網站',
       accent: '隨時隨地都能下單',
-      desc: '商品、購物車、會員與訂單一應俱全，手機上也能順暢完成購買。',
+      desc: '商品、購物車、會員與訂單一應俱全，串好線上金流，手機上也能順暢完成付款。',
       audiences: ['品牌電商', '選物店', '餐飲外帶', '課程販售', '會員制服務'],
       url: 'lumi.shop',
     },
@@ -135,7 +141,7 @@ export const webCard = {
       id: 'app' as ShowcaseType,
       label: 'APP',
       accent: '會員服務帶著走',
-      desc: '預約、會員卡與點數放進手機，再搭配電腦版管理後台。',
+      desc: '預約、會員卡與點數放進手機，可搭配 LINE 登入，再用電腦版後台管理。',
       audiences: ['美容美髮', '健身運動', '診所', '補習教育', '會員制店家'],
       url: 'bloom.app',
     },
@@ -245,62 +251,66 @@ export const statusLabel: Record<WorkStatus, string> = {
 }
 
 export const process = [
-  { icon: 'forum', title: '需求訪談', desc: '了解目標、預算與時程，確認網站要解決的問題。' },
-  { icon: 'request_quote', title: '規劃報價', desc: '提出頁面架構、功能範圍與明確報價，雙方確認後開工。' },
-  { icon: 'draw', title: '設計／切版', desc: '依設計稿或共同討論的風格製作，階段性提供預覽連結。' },
-  { icon: 'fact_check', title: '測試驗收', desc: '多裝置、多瀏覽器測試，依回饋調整至滿意。' },
-  { icon: 'rocket_launch', title: '上線維護', desc: '協助上線部署，並提供保固期內的問題修正。' },
+  { icon: 'forum', title: '需求訪談', desc: '了解你的生意、目標客群與預算，確認線上要做到哪些事。' },
+  { icon: 'request_quote', title: '整體規劃', desc: '網站、金流、LINE、社群一次規劃，提出完整架構與明確報價。' },
+  { icon: 'draw', title: '設計製作', desc: '設計與開發同步進行，階段性提供預覽連結，隨時看得到進度。' },
+  { icon: 'fact_check', title: '串接測試', desc: '金流、LINE、表單與各裝置逐項實測，確認每個環節都順。' },
+  { icon: 'rocket_launch', title: '上線陪跑', desc: '協助上線與帳號交接，保固期內問題修正，之後持續優化。' },
 ]
 
 export const about = {
-  title: '小而專精的網站工作室',
+  title: '一個窗口，把線上生意整套做好',
   paragraphs: [
-    'Fish Studio 是位於台中的網站設計與前端開發工作室，專注於形象官網、設計稿切版與前端互動開發。主理人 Fish 擁有 16 年網站前端經驗，長期與品牌、設計公司及開發團隊遠端合作。',
-    '我們相信好網站不只要好看，更要好用、好維護。結合 AI 工具加快製作節奏，再由工程師逐一把關每個細節；沒有層層轉包，從需求溝通、設計製作到上線維護，都由同一個窗口負責到底。',
+    'Fish Studio 是位於台中的一條龍網站工作室。從品牌網站設計、金流串接、LINE 官方帳號到社群與網域主機，網站上線需要的每一段都能交給我們。主理人 Fish 擁有 16 年網站實戰經驗，長期與品牌、設計公司及開發團隊合作。',
+    '很多店家架網站時，要分別找設計、工程、金流和行銷，光溝通就耗掉大半力氣。我們把這些整合成同一個窗口：沒有層層轉包，結合 AI 工具加快製作，再逐一把關細節，讓你的網站上線就能開始接單。',
   ],
-  // 工作室特色（取代原本個人技能清單）
-  highlights: ['單一窗口', 'AI 加速製作', '設計稿 1:1 還原', 'RWD 響應式', 'SEO 基礎優化', '原始碼完整交付', '保固與長期維護'],
-  cta: { label: '洽談合作', href: '#contact' },
+  // 工作室特色
+  highlights: ['單一窗口', '品牌網站設計', '金流串接', 'LINE 官方帳號', '社群整合', '網域主機代辦', '原始碼完整交付', '保固與長期維護'],
+  cta: { label: '免費諮詢', href: '#contact' },
 }
 
 export const faqs = [
+  {
+    q: '我什麼都還沒有，可以從零開始嗎？',
+    a: '可以，這正是一條龍服務最適合的情況。從網域、網站、金流到 LINE 官方帳號與社群，我們會依你的生意規劃需要的項目，一步步帶你完成。',
+  },
+  {
+    q: '金流帳號要自己申請嗎？',
+    a: '金流商（如綠界、藍新）的帳號需要用你的公司或個人名義申請，款項才會直接進你的帳戶。我們會協助準備申請資料，並完成串接與實際付款測試。',
+  },
+  {
+    q: '已經有網站了，可以只做金流、LINE 或社群嗎？',
+    a: '可以。每一項服務都能單獨委託，我們會先評估現有網站的狀況，再建議最省事的做法。',
+  },
+  {
+    q: '網站製作大概需要多久？',
+    a: '一般形象官網約 3–6 週，選擇 AI 快速架站最快 1–2 週即可上線；含金流的購物網站會依商品與功能多寡另外評估。實際時程會在報價時明確列出。',
+  },
+  {
+    q: '費用怎麼計算？',
+    a: '依網站頁數、功能，以及需要的金流、LINE、社群等項目組合而定。填寫下方表單描述需求後，會提供免費初步評估與報價。',
+  },
   {
     q: '用 AI 架的網站，品質會比較差嗎？',
     a: 'AI 負責加速提案與重複性的製作，最終的版面細節、響應式、跨瀏覽器與程式品質都由工程師逐一檢查調整，交付標準與傳統製作相同。',
   },
   {
-    q: '網站製作大概需要多久？',
-    a: '一般形象官網約 3–6 週，選擇 AI 快速架站最快 1–2 週即可上線；單純切版依頁數約 1–2 週。實際時程會在報價時依需求範圍明確列出。',
-  },
-  {
-    q: '費用怎麼計算？',
-    a: '依頁數、功能複雜度與是否需要設計而定。填寫下方表單描述需求後，會提供免費初步評估與報價。',
-  },
-  {
-    q: '我只有想法、沒有設計稿可以嗎？',
-    a: '可以。會先透過訪談與參考網站整理出風格方向，再進行版面設計，確認後才開始製作。',
-  },
-  {
-    q: '可以只接切版或前端的部分嗎？',
-    a: '可以，也非常歡迎設計公司、行銷公司與接案團隊合作，配合你們既有的流程與後端系統。',
-  },
-  {
     q: '上線後有問題怎麼辦？',
-    a: '交付後提供保固期內的免費修正，之後也可依需求選擇單次或月約維護。',
+    a: '交付後提供保固期內的免費修正，之後也可依需求選擇單次或月約維護。網域、主機、金流等帳號都登記在你名下，隨時可以自己掌握。',
   },
 ]
 
 export const contact = {
-  title: '聊聊你的專案',
-  desc: '不論是全新網站、改版，或只是想先問問看，都歡迎留下需求，我們會即時回覆你。',
+  title: '聊聊你的生意',
+  desc: '不確定需要哪些服務也沒關係，告訴我們你想做什麼，我們幫你規劃整套做法與預算，諮詢完全免費。',
   // 左側合作特色列表（icon 為 Material Symbols 名稱）
   highlights: [
     { icon: 'schedule', title: '1 個工作天內回覆', note: '（六日、國定假日除外）', desc: '收到需求後將即時回覆，不讓你的需求空等。' },
     { icon: 'handshake', title: '台中可約面談', desc: '台中地區可安排實體會議，當面討論需求與細節。' },
     { icon: 'public', title: '全台遠端合作', desc: '線上會議與即時通訊，12 年遠端經驗，溝通零距離。' },
-    { icon: 'deployed_code', title: '完整交付專案', desc: '從規劃、製作到上線一手包辦，原始碼完整交付。' },
+    { icon: 'deployed_code', title: '一條龍全包辦', desc: '網站、金流、LINE、社群一次整合，原始碼與帳號完整交付。' },
     { icon: 'verified_user', title: '保固與後續維護', desc: '上線後提供保固期修正，也可彈性安排長期維護。' },
   ],
-  serviceOptions: ['AI 快速架站', '形象官網', '設計稿切版', '前端開發', '網站改版', '維護合作', '其他'],
+  serviceOptions: ['一條龍全包', '品牌網站', '購物網站／金流', 'LINE 官方帳號', '社群整合', 'AI 快速架站', '網站改版', '維護合作', '其他'],
   budgetOptions: ['尚未確定', '5 萬以下', '5–10 萬', '10–20 萬', '20 萬以上'],
 }
