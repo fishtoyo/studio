@@ -116,13 +116,22 @@
     @apply mt-3 text-[17px] md:text-[16px] leading-relaxed text-muted;
   }
   /* ── 輪播（精選案例） ── */
-  /* 卡片 hover 會上浮與出現陰影，上下預留空間避免被裁掉（左右不留，否則會露出下一張的邊） */
+  /* 卡片 hover 會上浮與出現陰影，四周預留空間避免陰影被裁掉，再用負 margin 抵銷，版面位置不變。
+     左右留 24px＝卡片間距（spaceBetween），隔壁那張剛好落在裁切線外，不會露出邊；
+     手機版沒有 hover，且右側要露出下一張，所以左右不留 */
+  /* Swiper 自帶的 .swiper { padding: 0; margin: auto } 不在 cascade layer 裡、優先權較高，這裡必須加 !important 才蓋得過 */
   .works-swiper {
-    margin-top: -16px;
-    padding: 16px 0 32px;
+    margin: -32px 0 -48px !important;   /* 抵銷 padding，卡片與下方圓點維持原本的位置 */
+    padding: 16px 0 48px !important;
+  }
+  @media (min-width: 768px) {
+    .works-swiper {
+      margin-inline: -24px !important;
+      padding-inline: 24px !important;
+    }
   }
   .slider-arrow {
-    @apply flex h-12 w-12 items-center justify-center rounded-full border border-ink/15 text-ink transition duration-200 hover:border-brand hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+    @apply flex h-12 w-12 items-center justify-center rounded-full border border-ink/15 bg-white text-ink transition duration-200 hover:border-brand hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
   }
   .slider-arrow.is-disabled {
     @apply pointer-events-none opacity-30;

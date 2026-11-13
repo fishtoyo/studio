@@ -77,25 +77,25 @@ export function ContactForm() {
 
       <div className="grid gap-5 md:grid-cols-2">
         <label className="block">
-          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">姓名 <span className="text-brand">*</span></span>
+          <span className="mb-2 block text-[17px] font-bold md:text-[15px]">姓名 <span className="text-brand">*</span></span>
           <input name="name" required className="field" placeholder="王小明" autoComplete="name" />
         </label>
         <label className="block">
-          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">公司／品牌</span>
+          <span className="mb-2 block text-[17px] font-bold md:text-[15px]">公司／品牌</span>
           <input name="company" className="field" placeholder="選填" autoComplete="organization" />
         </label>
         <label className="block">
-          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">Email <span className="text-brand">*</span></span>
+          <span className="mb-2 block text-[17px] font-bold md:text-[15px]">Email <span className="text-brand">*</span></span>
           <input name="email" type="email" required className="field" placeholder="you@example.com" autoComplete="email" />
         </label>
         <label className="block">
-          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">電話／LINE</span>
+          <span className="mb-2 block text-[17px] font-bold md:text-[15px]">電話／LINE</span>
           <input name="phone" className="field" placeholder="選填" autoComplete="tel" />
         </label>
       </div>
 
       <fieldset className="mt-6">
-        <legend className="mb-3 text-[16px] font-bold md:text-[14px]">需求類型（可複選）</legend>
+        <legend className="mb-3 text-[17px] font-bold md:text-[15px]">需求類型（可複選）</legend>
         {/* 手機版一排兩個、寬度均分；平板以上依字數排列 */}
         <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
           {contact.serviceOptions.map(s => {
@@ -120,7 +120,7 @@ export function ContactForm() {
       </fieldset>
 
       <label className="mt-6 block">
-        <span className="mb-2 block text-[16px] font-bold md:text-[14px]">方案與預算</span>
+        <span className="mb-2 block text-[17px] font-bold md:text-[15px]">方案與預算</span>
         <span className="relative block">
           <select name="budget" className="field appearance-none pr-10" defaultValue={contact.budgetOptions[0]}>
             {contact.budgetOptions.map(b => <option key={b}>{b}</option>)}
@@ -130,7 +130,7 @@ export function ContactForm() {
       </label>
 
       <label className="mt-6 block">
-        <span className="mb-2 block text-[16px] font-bold md:text-[14px]">需求說明 <span className="text-brand">*</span></span>
+        <span className="mb-2 block text-[17px] font-bold md:text-[15px]">需求說明 <span className="text-brand">*</span></span>
         <textarea
           name="message"
           required
@@ -144,10 +144,13 @@ export function ContactForm() {
         <p className="mt-4 text-[14px] text-red-600">送出失敗，請稍後再試{studio.email && <>，或直接來信 {studio.email}</>}。</p>
       )}
 
-      <button type="submit" disabled={status === 'sending'} className="btn btn-primary mt-8 w-full md:w-auto disabled:opacity-60">
-        {status === 'sending' ? '送出中…' : '送出需求'}
-        <span className="icon text-[20px]!">send</span>
-      </button>
+      {/* 送出按鈕靠右（手機版維持滿寬） */}
+      <div className="mt-8 flex justify-end">
+        <button type="submit" disabled={status === 'sending'} className="btn btn-primary w-full md:w-auto disabled:opacity-60">
+          {status === 'sending' ? '送出中…' : '送出需求'}
+          <span className="icon text-[20px]!">send</span>
+        </button>
+      </div>
     </form>
   )
 }

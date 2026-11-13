@@ -68,7 +68,7 @@ function Logo() {
     <a href="#top" className="flex shrink-0 items-center gap-1.5 text-[#0b1b2b]" aria-label={studio.name}>
       <img src={`${import.meta.env.BASE_URL}assets/logo-black.png`} alt="" width={75} height={27} className="block h-[27px] w-auto" />
       <span className="font-brand text-[14px] font-bold uppercase leading-[14px]" aria-hidden>
-        <span className="block">Website</span>
+        <span className="block">Digital</span>
         <span className="block">Studio</span>
       </span>
     </a>
@@ -533,7 +533,7 @@ function ChatWindow({ active }: { active: boolean }) {
       <div className="flex items-center gap-3 border-b border-line px-6 py-4">
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand font-display text-[18px] font-bold text-white">F</span>
         <div>
-          <p className="text-[16px] font-bold">Fish Studio</p>
+          <p className="text-[16px] font-bold">Fish Digital Studio</p>
           <p className="flex items-center gap-1.5 text-[12px] text-muted">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />通常 1 個工作天內回覆
           </p>
@@ -1133,8 +1133,8 @@ function DesktopFrame({ url, children }: { url: string; children: ReactNode }) {
         </span>
       </div>
       {/* 畫面內容以 500px 寬的版面設計，等比放大 1.2 倍填滿視窗，字和元素都跟著變大 */}
-      <div className="h-[440px] overflow-hidden">
-        <div className="h-[367px] w-[500px] origin-top-left scale-[1.2]">{children}</div>
+      <div className="h-[440px] overflow-hidden max-sm:h-[640px]">
+        <div className="h-[367px] w-[500px] max-sm:h-[534px] origin-top-left scale-[1.2]">{children}</div>
       </div>
     </div>
   )
@@ -1206,7 +1206,7 @@ function DeviceBackdrop({ device }: { device: CardDevice }) {
               <span className="h-3 w-3 rounded-full bg-[#28c840]" />
               <span className="ml-3 h-7 flex-1 rounded-md bg-paper" />
             </div>
-            <div className="h-[440px]"><DecoContent tone={w.tone} cols={3} /></div>
+            <div className="h-[440px] max-sm:h-[640px]"><DecoContent tone={w.tone} cols={3} /></div>
           </div>
         </div>
       ))}
@@ -1344,6 +1344,11 @@ function ShopScreen({ device }: { device: CardDevice }) {
         <div className="mt-2 grid grid-cols-4 gap-3">
           {[...shopProducts.slice(4), ...shopProducts.slice(0, 2)].map((p, i) => <ProductCard key={`${p.name}-${i}`} p={p} small />)}
         </div>
+        {/* 多一層分類：手機版視窗加高後內容仍比視窗長，自動捲動才看得出來 */}
+        <p className="mt-4 text-[12px] font-bold text-ink">香氛精選</p>
+        <div className="mt-2 grid grid-cols-4 gap-3">
+          {[shopProducts[2], shopProducts[5], shopProducts[1], shopProducts[3]].map((p, i) => <ProductCard key={`${p.name}-scent-${i}`} p={p} small />)}
+        </div>
       </div>
       {/* 頁尾 */}
       <div className="mt-5 flex items-center justify-between bg-ink px-5 py-4 text-[10px] text-white/70">
@@ -1462,6 +1467,21 @@ function WebCard() {
   const inView = useInView(sectionRef, { amount: 0.4 })   // 捲出畫面就暫停
   const [hovered, setHovered] = useState(false)            // 滑鼠停在區塊上時暫停
 
+  // 手機版（< 640px）舞台整體縮成 0.55 倍，手機、平板畫面太小，再各自額外放大；
+  // 電腦畫面寬度已到極限，維持原大小。背景裝飾跟著放大，超出左右被切掉沒關係
+  const [vw, setVw] = useState(() => window.innerWidth)
+  useEffect(() => {
+    const onResize = () => setVw(window.innerWidth)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+  const MOBILE_BASE = 0.55
+  const mobileBoost = (id: CardDevice) => {
+    if (vw >= 640 || id === 'desktop') return 1
+    const target = id === 'phone' ? 0.8 : Math.min(0.85, (vw - 24) / 424)   // 平板含外框寬 424px，左右至少留 12px
+    return target / MOBILE_BASE
+  }
+
   // 每次切換（自動或手動點按鈕）都重新計時，手動點完不會馬上被切走
   useEffect(() => {
     if (!inView || hovered) return
@@ -1506,8 +1526,9 @@ function WebCard() {
             {/* 左：裝置畫面 */}
             <div className="order-2 lg:order-1">
               {/* 舞台：600×600，依螢幕等比縮放；最大 600px 剛好放進左欄，不會貼到右側文字 */}
-              <div className="relative mx-auto h-[330px] w-full max-w-[600px] sm:h-[510px] xl:h-[600px]">
-                <div className="absolute left-1/2 top-0 h-[600px] w-[600px] origin-top -translate-x-1/2 scale-[0.55] sm:scale-[0.85] xl:scale-100">
+              {/* 手機版舞台高 470px（放大後的手機畫面約 448px），縮放後的 600 方框往下 70px 讓內容垂直置中 */}
+              <div className="relative mx-auto h-[470px] w-full max-w-[600px] sm:h-[510px] xl:h-[600px]">
+                <div className="absolute left-1/2 top-[70px] h-[600px] w-[600px] origin-top -translate-x-1/2 scale-[0.55] sm:top-0 sm:scale-[0.85] xl:scale-100">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.div
                       key={current.id}
@@ -1518,8 +1539,13 @@ function WebCard() {
                       transition={{ duration: 0.45, ease: REVEAL_EASE }}
                       className="absolute inset-0 flex items-center justify-center will-change-transform"
                     >
-                      <DeviceBackdrop device={current.id} />
-                      <div className="relative"><ShopScreen device={current.id} /></div>
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ transform: `scale(${mobileBoost(current.id)})` }}
+                      >
+                        <DeviceBackdrop device={current.id} />
+                        <div className="relative"><ShopScreen device={current.id} /></div>
+                      </div>
                     </motion.div>
                   </AnimatePresence>
                 </div>
@@ -1621,7 +1647,7 @@ function Works() {
       <SectionBg tone="works" blobs={['-left-32 top-1/3 h-[460px] w-[460px] bg-indigo-200/25']} />
       <div className="container-x relative">
         <div className="flex items-end justify-between gap-6">
-          <SectionHead eyebrow="Selected Cases" title="精選案例" desc="自主開發的產品與技術實驗，結合 AI 工具加速開發，從構想、設計到上線完整實作。" />
+          <SectionHead eyebrow="Selected Cases" title="精選案例" desc="從學習平台、企業系統到手機 App，每個案子依需求選用合適的技術，打造出不同的功能與使用體驗。" />
           {/* 左右箭頭（手機版隱藏，用滑動與圓點切換） */}
           <div className="hidden shrink-0 gap-3 md:flex">
             <button type="button" className="works-prev slider-arrow" aria-label="上一組作品">
@@ -1694,7 +1720,7 @@ function Process() {
         }}
       />
       <div className="container-x relative">
-        <SectionHead eyebrow="Process" title="合作流程" desc="清楚的步驟與階段性預覽，讓你隨時掌握進度。" center />
+        <SectionHead eyebrow="Process" title="合作流程" desc="步驟精簡清楚，從確認需求到上線，快速完成每個環節。" center />
         <div className="relative mt-16">
           {/* 串起各步驟的連接線：從第一個圓心到最後一個圓心，兩端被圓圈蓋住 */}
           <div className="pointer-events-none absolute left-[10%] right-[10%] top-12 hidden h-0.5 -translate-y-1/2 rounded-full bg-brand/35 md:block" />
@@ -1736,7 +1762,7 @@ function Process() {
                     <div className="pt-1 md:pt-0">
                       <p className="font-display text-[12px] font-semibold tracking-[0.15em] text-brand-dark md:mt-5">STEP {String(i + 1).padStart(2, '0')}</p>
                       <h3 className={`mt-1 text-[21px] font-bold transition-colors duration-300 ${isActive ? 'text-brand' : 'text-ink'}`}>{p.title}</h3>
-                      <p className="mt-2 text-[17px] leading-relaxed text-ink/85 md:text-[15px]">{p.desc}</p>
+                      <p className="mt-2 text-[18px] leading-relaxed text-ink md:text-[16px]">{p.desc}</p>
                     </div>
                   </motion.div>
                 </motion.li>
@@ -1751,40 +1777,136 @@ function Process() {
 }
 
 /* ---------------- About ---------------- */
+/* 品牌名片：90×54mm 名片比例，深藍款（漸層緩慢流動，studio.css 的 .about-card）與淺色款 */
+type CardTone = 'dark' | 'light'
+const BRAND_CARD_STYLE: Record<CardTone, { card: string; gloss: string; mark: string; tagline: string; location: string }> = {
+  dark: {
+    card: 'about-card text-white shadow-[0_30px_60px_-30px_rgba(8,38,66,0.6)]',
+    gloss: 'rgba(255,255,255,0.12)',
+    mark: 'text-white/[0.06]',
+    tagline: 'text-white/80',
+    location: 'text-white/70',
+  },
+  light: {
+    card: 'border border-line bg-[linear-gradient(140deg,#ffffff_0%,#f1f7fc_55%,#e4eff8_100%)] text-ink shadow-[0_30px_60px_-30px_rgba(8,38,66,0.45)]',
+    gloss: 'rgba(255,255,255,0.7)',
+    mark: 'text-brand/[0.08]',
+    tagline: 'text-ink/70',
+    location: 'text-ink/60',
+  },
+}
+
+function BrandCard({ tone }: { tone: CardTone }) {
+  const s = BRAND_CARD_STYLE[tone]
+  return (
+    <div className={`relative flex aspect-[90/54] flex-col justify-between overflow-hidden rounded-2xl p-7 md:p-8 ${s.card}`}>
+      {/* 名片光澤 */}
+      <div className="pointer-events-none absolute inset-0" style={{ background: `linear-gradient(115deg, transparent 35%, ${s.gloss} 50%, transparent 65%)` }} />
+      <span className={`font-brand pointer-events-none absolute -bottom-8 -right-4 text-[150px] font-bold leading-none ${s.mark}`}>FISH</span>
+
+      {/* 上：品牌名 */}
+      <div className="relative flex items-start justify-between">
+        {/* 與 header 相同的 Logo（FISH 圖＋DIGITAL / STUDIO 兩行），等比放大；深藍款把 Logo 圖轉成白色 */}
+        <div className="flex items-center gap-2">
+          <img
+            src={`${import.meta.env.BASE_URL}assets/logo-black.png`}
+            alt=""
+            width={111}
+            height={40}
+            className={`block h-[34px] w-auto md:h-[40px] ${tone === 'dark' ? 'brightness-0 invert' : ''}`}
+          />
+          <span className="font-brand text-[18px] font-bold uppercase leading-[18px] md:text-[21px] md:leading-[21px]">
+            <span className="block">Digital</span>
+            <span className="block">Studio</span>
+          </span>
+        </div>
+      </div>
+
+      {/* 下：服務與地點 */}
+      <div className="relative">
+        <p className={`font-brand text-[13px] tracking-[0.12em] ${s.tagline}`}>ONE-STOP DIGITAL STUDIO</p>
+        <p className={`mt-2 flex items-center gap-1.5 text-[13px] ${s.location}`}>
+          <span className="icon text-[16px]!">location_on</span>
+          {studio.location}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/* 兩張名片疊放，每隔幾秒像抽卡一樣切換：
+   1. 後面那張往上抽起（仍在後方），抽到完全露出前面那張的上方
+   2. 圖層換到最前面，再放下、轉正到原位；原本前面那張同時轉成後方的傾斜角度
+   滑鼠停在名片上或捲出畫面時暫停；滑過時名片多轉 2 度（前面那張剛好轉正） */
+const CARD_SWAP_MS = 5000
+const CARD_LIFT_MS = 500                       // 抽起階段的時間，結束時換圖層
+const CARD_SWAP_EASE = [0.65, 0, 0.35, 1] as const
+function AboutCards() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { amount: 0.5 })
+  const [hovered, setHovered] = useState(false)
+  const [front, setFront] = useState<CardTone>('dark')
+  const [lifted, setLifted] = useState<CardTone | null>(null)   // 正在往上抽起的那張
+  // 抽起高度：電腦版抽到整張完全露出；手機版名片上方空間少，抽 65% 避免被區塊上緣切掉
+  const [liftY] = useState(() => (window.innerWidth < 768 ? '-65%' : '-104%'))
+
+  // 等待時間到 → 開始抽起（暫停條件只影響「要不要開始」）
+  useEffect(() => {
+    if (!inView || hovered || lifted) return
+    const timer = setTimeout(() => setLifted(front === 'dark' ? 'light' : 'dark'), CARD_SWAP_MS)
+    return () => clearTimeout(timer)
+  }, [front, inView, hovered, lifted])
+
+  // 抽起後一定會換到前面並放下，中途滑鼠移入也不會卡在半空
+  useEffect(() => {
+    if (!lifted) return
+    const timer = setTimeout(() => { setFront(lifted); setLifted(null) }, CARD_LIFT_MS)
+    return () => clearTimeout(timer)
+  }, [lifted])
+
+  return (
+    <div
+      ref={ref}
+      className="group relative mx-auto grid w-full max-w-[480px] lg:mx-0"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {(['light', 'dark'] as const).map(tone => {
+        const isFront = front === tone
+        const isLifted = lifted === tone
+        return (
+          <motion.div
+            key={tone}
+            className="[grid-area:1/1]"
+            style={{ zIndex: isFront ? 2 : 1 }}   // 圖層直接切換（抽起時已完全露出，不會看到跳動）
+            initial={false}
+            animate={
+              isLifted
+                ? { y: liftY, rotate: 1 }          // 抽起：仍在後方，往上移並稍微轉正
+                : isFront
+                  ? { y: '0%', rotate: -2 }        // 放下到最前面
+                  : { y: '0%', rotate: 5 }         // 後方的傾斜角度
+            }
+            transition={{ duration: CARD_LIFT_MS / 1000, ease: CARD_SWAP_EASE }}
+          >
+            {/* 滑過時的額外角度放在內層，和切換動畫互不干擾 */}
+            <div className="transition duration-500 group-hover:rotate-2">
+              <BrandCard tone={tone} />
+            </div>
+          </motion.div>
+        )
+      })}
+    </div>
+  )
+}
+
 function About() {
   return (
     <section id="about" className="section section-screen relative overflow-hidden">
       <SectionBg tone="about" blobs={['-right-40 top-1/3 h-[480px] w-[480px] bg-emerald-200/25']} />
       <div className="container-x grid items-center gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20 relative">
         <Reveal>
-          {/* 品牌名片：90×54mm 名片比例；後方疊一張微傾的白卡增加實體感，滑過時名片轉正
-              深藍漸層緩慢流動（studio.css 的 .about-card） */}
-          <div className="group relative mx-auto w-full max-w-[480px] lg:mx-0">
-            <div className="absolute inset-0 rotate-[5deg] rounded-2xl border border-line bg-white shadow-[0_20px_50px_-30px_rgba(8,38,66,0.35)] transition duration-500 group-hover:rotate-[7deg]" />
-            <div className="about-card relative flex aspect-[90/54] -rotate-2 flex-col justify-between overflow-hidden rounded-2xl p-7 text-white shadow-[0_30px_60px_-30px_rgba(8,38,66,0.6)] transition duration-500 group-hover:rotate-0 md:p-8">
-              {/* 名片光澤 */}
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_35%,rgba(255,255,255,0.12)_50%,transparent_65%)]" />
-              <span className="font-brand pointer-events-none absolute -bottom-8 -right-4 text-[150px] font-bold leading-none text-white/[0.06]">FISH</span>
-
-              {/* 上：品牌名 */}
-              <div className="relative flex items-start justify-between">
-                <div>
-                  <p className="font-brand text-[36px] font-bold leading-none md:text-[40px]">FISH</p>
-                  <p className="font-brand mt-2 text-[13px] tracking-[0.3em] text-white/60">STUDIO</p>
-                </div>
-                <span className="icon text-[28px]! text-white/70">code_blocks</span>
-              </div>
-
-              {/* 下：服務與地點 */}
-              <div className="relative">
-                <p className="font-brand text-[13px] tracking-[0.12em] text-white/80">ONE-STOP DIGITAL STUDIO</p>
-                <p className="mt-2 flex items-center gap-1.5 text-[13px] text-white/70">
-                  <span className="icon text-[16px]!">location_on</span>
-                  {studio.location}
-                </p>
-              </div>
-            </div>
-          </div>
+          <AboutCards />
         </Reveal>
 
         <div>

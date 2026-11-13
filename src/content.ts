@@ -1,11 +1,11 @@
 // 工作室頁面的所有文案與資料集中於此，改字只需改這個檔案
 
 export const studio = {
-  name: 'Fish Studio',
+  name: 'Fish Digital Studio',
   tagline: 'One-Stop Digital Studio',
   // 聯絡資訊：留空的欄位不會顯示
   email: '',
-  location: '台中・全台遠端合作',
+  location: '全台服務',
   responseTime: '1 個工作天內回覆',
   responseNote: '（六日、國定假日除外）',
   // Web3Forms access key（https://web3forms.com 免費申請，填入 Email 即可取得）
@@ -275,16 +275,16 @@ export const statusLabel: Record<WorkStatus, string> = {
 
 export const process = [
   { icon: 'forum', title: '需求訪談', desc: '了解你的生意、目標客群與預算，確認線上要做到哪些事。' },
-  { icon: 'request_quote', title: '整體規劃', desc: '網站、金流、LINE、社群一次規劃，提出完整架構與明確報價。' },
-  { icon: 'draw', title: '設計製作', desc: '設計與開發同步進行，階段性提供預覽連結，隨時看得到進度。' },
-  { icon: 'fact_check', title: '串接測試', desc: '金流、LINE、表單與各裝置逐項實測，確認每個環節都順。' },
+  { icon: 'request_quote', title: '整體規劃', desc: '網站、金流、LINE 一次規劃，提出完整架構與報價。' },
+  { icon: 'draw', title: '設計製作', desc: '設計與開發同步進行，快速完成製作，縮短上線時間。' },
+  { icon: 'fact_check', title: '串接測試', desc: '金流、LINE 與各裝置逐項實測，確保操作順暢。' },
   { icon: 'rocket_launch', title: '持續陪伴', desc: '協助上線與帳號交接，保固期內問題修正，之後持續優化。' },
 ]
 
 export const about = {
   title: '專業技術，負責任的態度',
   paragraphs: [
-    'Fish Studio 是位於台中的網站工作室，累積 16 年網站實戰經驗，長期與品牌、設計公司及開發團隊合作。從品牌網站、預約與購物系統，到金流、LINE 官方帳號與網域主機，每一段都以扎實的技術完成。',
+    'Fish Digital Studio 是專業的網站工作室，累積 16 年網站實戰經驗，長期與品牌、設計公司及開發團隊合作。從品牌網站、預約與購物系統，到金流、LINE 官方帳號與網域主機，每一段都以扎實的技術完成。',
     '我們在意的不只是把網站做出來，而是做對、做穩：規劃時把做法與預算說清楚，製作時把關每個細節與速度，交付時附上完整原始碼與帳號。善用 AI 工具提升效率，品質依然一項一項確認，對交出去的成果負責。',
   ],
   // 工作室特色
@@ -333,7 +333,7 @@ export const contact = {
   // 左側合作特色列表（icon 為 Material Symbols 名稱）
   highlights: [
     { icon: 'schedule', title: '1 個工作天內回覆', note: '（六日、國定假日除外）', desc: '收到需求後將即時回覆，不讓你的需求空等。' },
-    { icon: 'public', title: '全台遠端合作', desc: '線上會議與即時通訊，12 年遠端經驗，溝通零距離。' },
+    { icon: 'public', title: '全台皆可合作', desc: '線上會議與即時通訊，不論在哪裡，溝通零距離。' },
     { icon: 'deployed_code', title: '一條龍全包辦', desc: '網站、金流、LINE、社群一次整合，原始碼與帳號完整交付。' },
     { icon: 'build', title: '舊網站也能接手', desc: '原廠商不處理或聯絡不上的網站，也可以交給我們整理、修改。' },
   ],
