@@ -73,12 +73,6 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="rounded-3xl border border-line bg-white p-6 md:p-10 shadow-[0_30px_60px_-30px_rgba(8,38,66,0.25)]"
     >
-      {isPreview && (
-        <p className="mb-6 rounded-xl bg-amber-50 px-4 py-3 text-[13px] text-amber-700">
-          預覽模式：尚未設定表單服務金鑰，送出不會真的寄信。
-        </p>
-      )}
-
       <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
 
       <div className="grid gap-5 md:grid-cols-2">
@@ -125,7 +119,7 @@ export function ContactForm() {
       </fieldset>
 
       <label className="mt-6 block">
-        <span className="mb-2 block text-[14px] font-bold">預算範圍</span>
+        <span className="mb-2 block text-[14px] font-bold">方案與預算</span>
         <span className="relative block">
           <select name="budget" className="field appearance-none pr-10" defaultValue={contact.budgetOptions[0]}>
             {contact.budgetOptions.map(b => <option key={b}>{b}</option>)}
@@ -139,7 +133,7 @@ export function ContactForm() {
         <textarea
           name="message"
           required
-          rows={5}
+          rows={3}
           className="field resize-y"
           placeholder="簡單描述你的網站需求、參考網站或預計上線時間…"
         />

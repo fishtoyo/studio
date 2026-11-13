@@ -94,7 +94,7 @@
       margin-right: -12px;
     }
   }
-  /* ── 卡片「icon + 標題同一排，下方描述」的共用尺寸（AI 快速架站、服務項目） ── */
+  /* ── 卡片「icon + 標題同一排，下方描述」的共用尺寸（服務項目） ── */
   .card-head {
     @apply flex items-center gap-3;
   }
@@ -110,7 +110,7 @@
   .card-desc {
     @apply mt-3 text-[16px] leading-relaxed text-muted;
   }
-  /* ── 輪播（精選作品） ── */
+  /* ── 輪播（精選案例） ── */
   /* 卡片 hover 會上浮與出現陰影，上下預留空間避免被裁掉（左右不留，否則會露出下一張的邊） */
   .works-swiper {
     margin-top: -16px;
@@ -161,4 +161,46 @@
   0%   { background-position: 0% 0%; }
   50%  { background-position: 100% 60%; }
   100% { background-position: 40% 100%; }
+}
+
+/* Hero 瀏覽器示意：輸入游標閃爍、loading 光暈掃過 */
+.caret-blink {
+  animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* 單一灰色、柔和漸層，中間沒有亮線 */
+  background: linear-gradient(100deg, rgba(148, 163, 184, 0) 10%, rgba(148, 163, 184, 0.16) 35%, rgba(148, 163, 184, 0.28) 50%, rgba(148, 163, 184, 0.16) 65%, rgba(148, 163, 184, 0) 90%);
+  transform: translateX(-100%);
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+@keyframes shimmer {
+  to { transform: translateX(100%); }
+}
+/* 對話「輸入中」三個點依序跳動 */
+.typing-dot {
+  animation: typing-dot 1s ease-in-out infinite;
+}
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+/* Hero 第三張：作品卡片無限垂直滾動 */
+.marquee-up {
+  animation: marquee-up 44s linear infinite;
+}
+.marquee-down {
+  animation: marquee-up 44s linear infinite reverse;
+}
+@keyframes marquee-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .caret-blink, .shimmer::after, .typing-dot, .marquee-up, .marquee-down { animation: none; }
 }

@@ -14,65 +14,97 @@ export const studio = {
 }
 
 export const nav = [
-  { id: 'ai', label: 'AI 快速架站' },
-  { id: 'services', label: '一條龍服務' },
-  { id: 'card', label: '網站類型' },
-  { id: 'works', label: '精選作品' },
+  { id: 'card', label: '友善介面' },
+  { id: 'services', label: '服務項目' },
+  { id: 'works', label: '精選案例' },
+  { id: 'pricing', label: '收費標準' },
   { id: 'process', label: '合作流程' },
   { id: 'about', label: '關於我們' },
   { id: 'faq', label: '常見問題' },
+  { id: 'rescue', label: '網站救援' },
 ]
 
 export const hero = {
   eyebrow: 'One-Stop Digital Studio',
-  title: ['從網站到金流，', '一個窗口全包辦。'],
-  desc: '品牌網站設計、線上金流、LINE 官方帳號、社群串接到網域主機，不用分別找設計師、工程師和各家廠商。告訴我們你想做的生意，其他交給 Fish Studio 一次整合到好。',
+  title: ['讓你的網站，', '開始幫你做生意。'],
+  desc: '不只是做網站，更幫你把生意搬上線：預約、購物、會員一套系統幫你接單，再串起網站、APP 與 LINE，讓客人一直回來。',
+  // 說明下方的三個重點
+  points: [
+    { icon: 'storefront', text: '品牌形象網站、購物會員與預約系統' },
+    { icon: 'hub', text: '金流、LINE 官方帳號與社群一次串接' },
+    { icon: 'support_agent', text: '上線後持續維護與優化' },
+  ],
   primary: '免費諮詢',
-  secondary: '看看作品',
-  // 右側示意圖上輪播切換的能力標籤（color 為 icon 顏色）
-  badges: [
-    { icon: 'palette', text: '品牌網站設計', color: '#0ea5e9' },
-    { icon: 'credit_card', text: '金流串接', color: '#10b981' },
-    { icon: 'chat', text: 'LINE 官方帳號', color: '#22c55e' },
-    { icon: 'share', text: '社群整合', color: '#f43f5e' },
-    { icon: 'auto_awesome', text: 'AI 快速架站', color: '#8b5cf6' },
-    { icon: 'travel_explore', text: 'SEO 友善結構', color: '#f59e0b' },
-  ],
+  secondary: { label: '一條龍服務', href: '#services' },
+  // 右側示意圖輪播順序（左側文案固定不動）
+  visuals: ['build', 'support', 'products'] as HeroVisualType[],
 }
 
-export const stats = [
-  { value: '1', unit: '個', label: '窗口從規劃到上線' },
-  { value: '16', unit: '年', label: '主理人網站實戰經驗' },
-  { value: '7', unit: '件', label: '自主開發產品' },
-  { value: '12', unit: '年', label: '遠端協作經驗' },
-]
-
-// AI 快速架站（Hero 下方的優勢強調區）
-export const aiBuild = {
-  eyebrow: 'AI-Powered Website',
-  title: 'AI 快速架站，',
-  titleAccent: ['時間縮短、', '品質不打折。'], // 手機版會分成兩行
-  desc: '結合 AI 工具加速版面提案與程式開發，再由 16 年經驗的工程師逐頁把關細節。讓你用更短的時程、更實在的預算，擁有專業又好維護的網站。',
-  cta: '了解 AI 快速架站',
-  // 時程比較（數字請依實際接案狀況調整）
-  compare: {
-    title: '一般形象網站製作時程',
-    scaleWeeks: 6, // 進度條下方刻度：0 ～ 6 週（ratio 以此為滿格）
-    traditional: { label: '傳統製作', value: '3–6 週', ratio: 1 },        // 6 / 6 週
-    ai: { label: 'AI 快速架站', value: '最快 1–2 週', ratio: 2 / 6 },     // 2 / 6 週
-  },
-  features: [
-    { icon: 'auto_awesome', title: 'AI 快速提案', desc: '短時間產出多種風格方向，先看到樣子再做決定。' },
-    { icon: 'bolt', title: 'AI 加速開發', desc: '重複性的版面與程式由 AI 協助，大幅縮短製作時間。' },
-    { icon: 'verified', title: '工程師人工把關', desc: 'RWD、跨瀏覽器、效能與 SEO 逐項人工檢查。' },
-    { icon: 'savings', title: '省時也省預算', desc: '製作時數降低，同樣的預算能做更多頁面與功能。' },
-  ],
-}
+// Hero 右側示意圖：網站與程式碼／客戶對話與合作紀錄／自有產品卡片牆
+export type HeroVisualType = 'build' | 'support' | 'products'
 
 // 一條龍服務：網站上線需要的每一段，都能交給同一個窗口
 export const servicesHead = {
   title: '從網站到接單，一條龍全包辦',
   desc: '架網站只是第一步，金流、LINE、社群、網域主機都要串起來，客人才找得到你、買得到東西。這些我們一次規劃、一起完成，你只要專心經營生意。',
+}
+
+// 收費標準
+// price 為數字字串時顯示「NT$ 金額」，其他文字（例如「討論後報價」）直接顯示
+export const pricingHead = {
+  title: '收費標準',
+  desc: '想快速上線，可以選固定樣板方案，價格透明；需要特別的功能，就選客製化方案。原本的網站找不到人維護，也可以交給我們接手。',
+  note: '以上價格皆未稅；網域、主機、金流手續費與簡訊等第三方費用依實際使用另計。',
+}
+
+export const pricing = [
+  {
+    name: '小資經營方案',
+    tagline: '建立品牌門面，輕鬆開店',
+    price: '6,999',
+    desc: '適合美髮、美甲、美睫、按摩等預約制店家，客人線上選時段，店家自動收到通知。',
+    features: ['品牌形象頁面', '線上預約與時段管理', '預約成功與提醒訊息通知', '手機、電腦都好操作', '精選樣板，不含額外客製功能'],
+    badge: '快速上線',
+    featured: false,
+  },
+  {
+    name: '商品販售方案',
+    tagline: '會員、購物車、金流一次搞定',
+    price: '16,999',
+    desc: '適合販售商品的品牌與小店，從上架、下單到收款都在同一個網站完成。',
+    features: ['商品上架與分類管理', '會員註冊與訂單查詢', '購物車與線上金流', '訂單通知與後台管理', '精選樣板，不含額外客製功能'],
+    badge: '快速上線',
+    featured: true,
+  },
+  {
+    name: '客製化方案',
+    tagline: '依你的需求量身打造',
+    price: '討論後報價',
+    desc: '固定樣板不夠用？功能、流程與版面都依需求規劃，打造專屬於你的系統。',
+    features: ['專屬版面設計', '預約、購物、會員自由組合', '金流、LINE 與第三方系統串接', '上線後持續維護'],
+    badge: '完全客製',
+    featured: false,
+  },
+]
+
+// 網站救援：原服務商不處理、聯絡不上或停業的網站，接手整理與修改
+export const rescue = {
+  eyebrow: 'Website Rescue',
+  title: ['網站還好好的，', '卻找不到人維護？'],
+  desc: '不用整個砍掉重做。我們可以接手你現有的網站，幫你整理、修改，讓它繼續幫你做生意。',
+  price: '依項目個別報價',
+  cta: '找我們接手',
+  // 主要狀況：放在四張常見狀況的正中央浮動
+  highlight: { icon: 'devices', title: '技術、版型太舊', desc: '想改成響應式版型，符合現代人手一機的瀏覽操作，手機也能順利操作！' },
+  // 常見狀況
+  cases: [
+    { icon: 'block', title: '服務商不願意調整', desc: '想改個文字、換張圖，對方卻說做不到或不處理。' },
+    { icon: 'phone_disabled', title: '原廠商聯絡不上', desc: '電話不接、信不回，網站出問題也沒人管。' },
+    { icon: 'domain_disabled', title: '原廠商已經停業', desc: '公司收掉了，網站卻還在跑，不知道能撐多久。' },
+    { icon: 'key_off', title: '帳號都在別人手上', desc: '主機、網域、後台帳號不在自己手裡，不知道從何下手。' },
+  ],
+  // 可以處理的項目
+  services: ['接手既有網站', '內容與版面修改', '錯誤修正與速度優化', '主機、網域搬家', '後續維護'],
 }
 
 export const services = [
@@ -114,52 +146,43 @@ export const services = [
   },
 ]
 
-/* ---------------- 網站類型（各類型網站在不同裝置的呈現） ---------------- */
-export type ShowcaseType = 'brand' | 'shop' | 'app'
+/* ---------------- 跨裝置操作：手機（客人）／平板（店家）／電腦（萬用），點按鈕切換 ---------------- */
+export type DeviceId = 'phone' | 'tablet' | 'desktop'
 
 export const webCard = {
-  eyebrow: 'Responsive Website',
-  // 左右輪播的網站類型：每一塊依序展示手機 → 平板 → 電腦，播完整塊滑到下一塊
-  types: [
+  cta: '免費諮詢',
+  devices: [
     {
-      id: 'brand' as ShowcaseType,
-      label: '形象網站',
-      accent: '每個螢幕都好看',
-      desc: '完整呈現品牌與服務，一鍵撥號、LINE、地圖導航，看完就能聯絡你。',
-      audiences: ['中小企業', '個人工作室', '自由工作者', '講師／顧問', '設計師'],
-      url: 'pinan.studio',
+      id: 'phone' as DeviceId,
+      label: '手機',
+      icon: 'smartphone',
+      role: '給你的客人',
+      title: '手機版，',
+      accent: '隨時隨地預約下單',
+      desc: '客人在通勤、排隊的空檔，打開手機就能瀏覽商品、預約時段、下單付款。用 LINE 登入免註冊，購物車與訂單紀錄隨時查得到。',
+      tags: ['線上預約', '一鍵下單', '線上付款', 'LINE 登入', '訂單查詢'],
     },
     {
-      id: 'shop' as ShowcaseType,
-      label: '購物會員網站',
-      accent: '隨時隨地都能下單',
-      desc: '商品、購物車、會員與訂單一應俱全，串好線上金流，手機上也能順暢完成付款。',
-      audiences: ['品牌電商', '選物店', '餐飲外帶', '課程販售', '會員制服務'],
-      url: 'lumi.shop',
+      id: 'tablet' as DeviceId,
+      label: '平板',
+      icon: 'tablet_mac',
+      role: '給店家老闆',
+      title: '平板版，',
+      accent: '店裡管理更順手',
+      desc: '在櫃台或倉庫拿起平板，就能查看今日訂單、更新庫存、確認預約名單。不用守在電腦前，現場有狀況也能馬上處理。',
+      tags: ['庫存管理', '訂單出貨', '預約名單', '會員資料', '即時通知'],
     },
     {
-      id: 'app' as ShowcaseType,
-      label: 'APP',
-      accent: '會員服務帶著走',
-      desc: '預約、會員卡與點數放進手機，可搭配 LINE 登入，再用電腦版後台管理。',
-      audiences: ['美容美髮', '健身運動', '診所', '補習教育', '會員制店家'],
-      url: 'bloom.app',
+      id: 'desktop' as DeviceId,
+      label: '電腦',
+      icon: 'desktop_windows',
+      role: '萬用的工作台',
+      title: '電腦版，',
+      accent: '大畫面操作最舒適',
+      desc: '大螢幕一次看清楚所有內容：客人逛商品更舒服，店家上架商品、看營業報表、處理大量資料也最有效率。',
+      tags: ['完整瀏覽', '商品上架', '營業報表', '批次處理', '數據分析'],
     },
   ],
-  // 裝置畫面裡的示意網站（虛構範例）
-  sample: {
-    name: '品安個人工作室',
-    logoIcon: 'chair',   // 示意 LOGO 圖示（室內設計）
-    role: '室內設計師',
-    url: 'pinan.studio',
-    actions: [
-      { icon: 'call', label: '撥打電話' },
-      { icon: 'chat', label: 'LINE' },
-      { icon: 'mail', label: 'Email' },
-      { icon: 'map', label: '工作室' },
-    ],
-    links: ['作品集', '服務項目', '預約諮詢'],
-  },
 }
 
 export type WorkStatus = 'live' | 'beta' | 'soon'
@@ -255,17 +278,17 @@ export const process = [
   { icon: 'request_quote', title: '整體規劃', desc: '網站、金流、LINE、社群一次規劃，提出完整架構與明確報價。' },
   { icon: 'draw', title: '設計製作', desc: '設計與開發同步進行，階段性提供預覽連結，隨時看得到進度。' },
   { icon: 'fact_check', title: '串接測試', desc: '金流、LINE、表單與各裝置逐項實測，確認每個環節都順。' },
-  { icon: 'rocket_launch', title: '上線陪跑', desc: '協助上線與帳號交接，保固期內問題修正，之後持續優化。' },
+  { icon: 'rocket_launch', title: '持續陪伴', desc: '協助上線與帳號交接，保固期內問題修正，之後持續優化。' },
 ]
 
 export const about = {
-  title: '一個窗口，把線上生意整套做好',
+  title: '專業技術，負責任的態度',
   paragraphs: [
-    'Fish Studio 是位於台中的一條龍網站工作室。從品牌網站設計、金流串接、LINE 官方帳號到社群與網域主機，網站上線需要的每一段都能交給我們。主理人 Fish 擁有 16 年網站實戰經驗，長期與品牌、設計公司及開發團隊合作。',
-    '很多店家架網站時，要分別找設計、工程、金流和行銷，光溝通就耗掉大半力氣。我們把這些整合成同一個窗口：沒有層層轉包，結合 AI 工具加快製作，再逐一把關細節，讓你的網站上線就能開始接單。',
+    'Fish Studio 是位於台中的網站工作室，累積 16 年網站實戰經驗，長期與品牌、設計公司及開發團隊合作。從品牌網站、預約與購物系統，到金流、LINE 官方帳號與網域主機，每一段都以扎實的技術完成。',
+    '我們在意的不只是把網站做出來，而是做對、做穩：規劃時把做法與預算說清楚，製作時把關每個細節與速度，交付時附上完整原始碼與帳號。善用 AI 工具提升效率，品質依然一項一項確認，對交出去的成果負責。',
   ],
   // 工作室特色
-  highlights: ['單一窗口', '品牌網站設計', '金流串接', 'LINE 官方帳號', '社群整合', '網域主機代辦', '原始碼完整交付', '保固與長期維護'],
+  highlights: ['16 年網站經驗', '現代化技術', '品牌網站設計', '金流串接', 'LINE 官方帳號', '社群整合', '網域主機代辦', '原始碼完整交付', '保固與長期維護'],
   cta: { label: '免費諮詢', href: '#contact' },
 }
 
@@ -273,6 +296,10 @@ export const faqs = [
   {
     q: '我什麼都還沒有，可以從零開始嗎？',
     a: '可以，這正是一條龍服務最適合的情況。從網域、網站、金流到 LINE 官方帳號與社群，我們會依你的生意規劃需要的項目，一步步帶你完成。',
+  },
+  {
+    q: '網站做完後，還找得到人嗎？',
+    a: '一定找得到。從洽談、製作到上線都是同一個窗口，不轉包；上線後一樣 1 個工作天內回覆，保固期內免費修正，之後也能長期合作維護。網站與各項帳號都登記在你名下，也不怕被綁住。',
   },
   {
     q: '金流帳號要自己申請嗎？',
@@ -284,7 +311,7 @@ export const faqs = [
   },
   {
     q: '網站製作大概需要多久？',
-    a: '一般形象官網約 3–6 週，選擇 AI 快速架站最快 1–2 週即可上線；含金流的購物網站會依商品與功能多寡另外評估。實際時程會在報價時明確列出。',
+    a: '一般形象官網約 3–6 週；含金流的購物網站會依商品與功能多寡另外評估。實際時程會在報價時明確列出。',
   },
   {
     q: '費用怎麼計算？',
@@ -301,16 +328,23 @@ export const faqs = [
 ]
 
 export const contact = {
-  title: '聊聊你的生意',
-  desc: '不確定需要哪些服務也沒關係，告訴我們你想做什麼，我們幫你規劃整套做法與預算，諮詢完全免費。',
+  title: '聊聊你的需求',
+  desc: '想開一間線上小店、加上預約或購物功能，或是舊網站找不到人維護？告訴我們你的狀況，我們幫你挑選合適的方案與預算，諮詢完全免費。',
   // 左側合作特色列表（icon 為 Material Symbols 名稱）
   highlights: [
     { icon: 'schedule', title: '1 個工作天內回覆', note: '（六日、國定假日除外）', desc: '收到需求後將即時回覆，不讓你的需求空等。' },
-    { icon: 'handshake', title: '台中可約面談', desc: '台中地區可安排實體會議，當面討論需求與細節。' },
     { icon: 'public', title: '全台遠端合作', desc: '線上會議與即時通訊，12 年遠端經驗，溝通零距離。' },
     { icon: 'deployed_code', title: '一條龍全包辦', desc: '網站、金流、LINE、社群一次整合，原始碼與帳號完整交付。' },
-    { icon: 'verified_user', title: '保固與後續維護', desc: '上線後提供保固期修正，也可彈性安排長期維護。' },
+    { icon: 'build', title: '舊網站也能接手', desc: '原廠商不處理或聯絡不上的網站，也可以交給我們整理、修改。' },
   ],
-  serviceOptions: ['一條龍全包', '品牌網站', '購物網站／金流', 'LINE 官方帳號', '社群整合', 'AI 快速架站', '網站改版', '維護合作', '其他'],
-  budgetOptions: ['尚未確定', '5 萬以下', '5–10 萬', '10–20 萬', '20 萬以上'],
+  serviceOptions: ['一條龍全包', '品牌網站', '購物網站／金流', 'LINE 官方帳號', '社群整合', '網站改版', '維護合作', '其他'],
+  // 方案與預算：先列出有固定價格的方案（名稱、價格直接取自 pricing，改價格會自動同步），再接預算區間
+  budgetOptions: [
+    '尚未確定',
+    ...pricing.filter(p => /^[\d,]+$/.test(p.price)).map(p => `${p.name}（NT$${p.price}）`),
+    '預算 5 萬以下',
+    '預算 5–10 萬',
+    '預算 10–20 萬',
+    '預算 20 萬以上',
+  ],
 }
