@@ -27,7 +27,7 @@ export const nav = [
 export const hero = {
   eyebrow: 'One-Stop Digital Studio',
   title: ['讓你的網站，', '開始幫你做生意。'],
-  desc: '不只是做網站，更幫你把生意搬上線：預約、購物、會員一套系統幫你接單，再串起網站、APP 與 LINE，讓客人一直回來。',
+  desc: '不只是做網站，更幫你把生意搬上線。立刻擁有你的預約系統、產品購物車、LINE 官方帳號等行銷工具，快速接單並串起網站與 APP，讓客人一直回來。',
   // 說明下方的三個重點
   points: [
     { icon: 'storefront', text: '品牌形象網站、購物會員與預約系統' },

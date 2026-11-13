@@ -77,26 +77,27 @@ export function ContactForm() {
 
       <div className="grid gap-5 md:grid-cols-2">
         <label className="block">
-          <span className="mb-2 block text-[14px] font-bold">姓名 <span className="text-brand">*</span></span>
+          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">姓名 <span className="text-brand">*</span></span>
           <input name="name" required className="field" placeholder="王小明" autoComplete="name" />
         </label>
         <label className="block">
-          <span className="mb-2 block text-[14px] font-bold">公司／品牌</span>
+          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">公司／品牌</span>
           <input name="company" className="field" placeholder="選填" autoComplete="organization" />
         </label>
         <label className="block">
-          <span className="mb-2 block text-[14px] font-bold">Email <span className="text-brand">*</span></span>
+          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">Email <span className="text-brand">*</span></span>
           <input name="email" type="email" required className="field" placeholder="you@example.com" autoComplete="email" />
         </label>
         <label className="block">
-          <span className="mb-2 block text-[14px] font-bold">電話／LINE</span>
+          <span className="mb-2 block text-[16px] font-bold md:text-[14px]">電話／LINE</span>
           <input name="phone" className="field" placeholder="選填" autoComplete="tel" />
         </label>
       </div>
 
       <fieldset className="mt-6">
-        <legend className="mb-3 text-[14px] font-bold">需求類型（可複選）</legend>
-        <div className="flex flex-wrap gap-2">
+        <legend className="mb-3 text-[16px] font-bold md:text-[14px]">需求類型（可複選）</legend>
+        {/* 手機版一排兩個、寬度均分；平板以上依字數排列 */}
+        <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
           {contact.serviceOptions.map(s => {
             const active = services.includes(s)
             return (
@@ -105,7 +106,7 @@ export function ContactForm() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => toggleService(s)}
-                className={`rounded-full border px-4 py-2 text-[14px] font-medium transition ${
+                className={`rounded-full border px-4 py-2.5 text-[16px] font-medium transition md:py-2 md:text-[14px] ${
                   active
                     ? 'border-brand bg-brand text-white'
                     : 'border-line bg-white text-ink/80 hover:border-brand hover:text-brand'
@@ -119,7 +120,7 @@ export function ContactForm() {
       </fieldset>
 
       <label className="mt-6 block">
-        <span className="mb-2 block text-[14px] font-bold">方案與預算</span>
+        <span className="mb-2 block text-[16px] font-bold md:text-[14px]">方案與預算</span>
         <span className="relative block">
           <select name="budget" className="field appearance-none pr-10" defaultValue={contact.budgetOptions[0]}>
             {contact.budgetOptions.map(b => <option key={b}>{b}</option>)}
@@ -129,7 +130,7 @@ export function ContactForm() {
       </label>
 
       <label className="mt-6 block">
-        <span className="mb-2 block text-[14px] font-bold">需求說明 <span className="text-brand">*</span></span>
+        <span className="mb-2 block text-[16px] font-bold md:text-[14px]">需求說明 <span className="text-brand">*</span></span>
         <textarea
           name="message"
           required

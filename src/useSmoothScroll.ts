@@ -25,6 +25,8 @@ function isTrackpad(e: WheelEvent & { wheelDeltaY?: number }) {
  */
 export function useSmoothScroll() {
   useEffect(() => {
+    // 手機、平板（沒有滑鼠／觸控板的觸控裝置）完全交給原生捲動，不啟動 Lenis，避免拖慢觸控滑動
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
     const lenis = new Lenis({
       lerp: 0.08,                             // 平滑程度：越小越滑順、越大越跟手（0～1）
       anchors: true,                          // 頁內錨點也用平滑捲動（避開 header 的距離沿用 CSS scroll-padding-top）

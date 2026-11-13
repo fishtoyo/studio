@@ -139,16 +139,33 @@ function Header() {
   const [active, select] = useActiveSection(navIds)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
+    const onScroll = () => setScrolled(window.scrollY > 140)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
+    <>
+    {/* 漢堡選單打開時，後方頁面蓋一層霧面遮罩，選單與內容才分得清楚；點遮罩即關閉選單
+        （放在 header 外面：header 有 backdrop-filter，fixed 子元素會被限制在 header 範圍內） */}
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-40 bg-ink/25 backdrop-blur-sm lg:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          onClick={() => setOpen(false)}
+          aria-hidden
+        />
+      )}
+    </AnimatePresence>
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled || open ? 'bg-white/90 shadow-[0_1px_0_rgba(8,38,66,0.08),0_8px_24px_-12px_rgba(8,38,66,0.15)] backdrop-blur-md' : 'bg-transparent'
+      // 手機／平板（漢堡選單版型）一開始就是有底色的樣式；電腦版捲動超過 140px 才加上
+      className={`fixed inset-x-0 top-0 z-50 bg-white/90 shadow-[0_1px_0_rgba(8,38,66,0.08),0_8px_24px_-12px_rgba(8,38,66,0.15)] backdrop-blur-md transition-all duration-300 ${
+        scrolled || open ? '' : 'lg:bg-transparent lg:shadow-none lg:backdrop-blur-none'
       }`}
     >
       <div className="flex h-18 w-full items-center justify-between px-5">
@@ -177,18 +194,22 @@ function Header() {
               </a>
             )
           })}
-          <a href="#contact" className="btn btn-sm btn-primary">預約諮詢</a>
+          <a href="#contact" className="btn btn-sm btn-primary text-[16px]">預約諮詢</a>
         </nav>
 
-        <button
-          type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full text-ink lg:hidden"
-          aria-label={open ? '關閉選單' : '開啟選單'}
-          aria-expanded={open}
-          onClick={() => setOpen(o => !o)}
-        >
-          <span className="icon text-[28px]!">{open ? 'close' : 'menu'}</span>
-        </button>
+        {/* 收合狀態：預約諮詢（小按鈕）直接放在漢堡選單旁邊，不用打開選單才看得到 */}
+        <div className="flex items-center gap-1.5 lg:hidden">
+          <a href="#contact" onClick={() => setOpen(false)} className="btn btn-sm btn-primary text-[16px]">預約諮詢</a>
+          <button
+            type="button"
+            className="flex h-11 w-11 items-center justify-center rounded-full text-ink"
+            aria-label={open ? '關閉選單' : '開啟選單'}
+            aria-expanded={open}
+            onClick={() => setOpen(o => !o)}
+          >
+            <span className="icon text-[28px]!">{open ? 'close' : 'menu'}</span>
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -200,25 +221,28 @@ function Header() {
             exit={{ height: 0 }}
             aria-label="行動版選單"
           >
-            <div className="container-x flex flex-col py-4">
+            {/* 各項目之間是滿版灰線；不留外層上下內距，每一格的高度（含第一格）都一樣 */}
+            <div className="flex flex-col divide-y divide-line">
               {nav.map(n => (
                 <a
                   key={n.id}
                   href={`#${n.id}`}
                   onClick={() => { select(n.id); setOpen(false) }}
                   aria-current={active === n.id ? 'true' : undefined}
-                  className={`flex items-center py-3 text-[18px] font-medium transition-colors ${active === n.id ? 'text-brand' : 'text-ink'}`}
+                  className={`flex items-center justify-center py-3.5 text-[20px] font-medium transition-colors ${active === n.id ? 'text-brand' : 'text-ink'}`}
                 >
                   <span className={`h-0.5 rounded-full bg-brand transition-all duration-300 ${active === n.id ? 'mr-3 w-5' : 'w-0'}`} />
                   {n.label}
+                  {/* 右側放等寬的透明佔位，左邊出現短線時文字仍保持置中 */}
+                  <span className={`h-0.5 transition-all duration-300 ${active === n.id ? 'ml-3 w-5' : 'w-0'}`} aria-hidden />
                 </a>
               ))}
-              <a href="#contact" onClick={() => setOpen(false)} className="btn btn-primary mt-3">預約諮詢</a>
             </div>
           </motion.nav>
         )}
       </AnimatePresence>
     </header>
+    </>
   )
 }
 
@@ -763,7 +787,8 @@ function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-svh flex-col overflow-hidden bg-white pb-10 pt-28 text-ink md:pt-32"
+      // 手機版依內容自然高度排列，平板以上才撐滿一個畫面
+      className="relative flex flex-col overflow-hidden bg-white pb-10 pt-28 text-ink md:min-h-svh md:pt-32"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -773,11 +798,14 @@ function Hero() {
         style={{
           backgroundImage: 'linear-gradient(#082642 1px, transparent 1px), linear-gradient(90deg, #082642 1px, transparent 1px)',
           backgroundSize: '64px 64px',
+          // 格線以區塊中心為基準（內容也是置中），再往右 13px：電腦版 1280～1920 寬時，
+          // 右側示意圖（對話視窗、瀏覽器、產品卡片）的左邊框離直向格線都至少 23px，不會貼著格線
+          backgroundPosition: 'calc(50% + 13px) calc(50% + 38px)',
           maskImage: 'radial-gradient(ellipse at 30% 40%, #000 30%, transparent 75%)',
         }}
       />
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-brand/15 blur-[120px]" />
-      <div className="pointer-events-none absolute -left-40 top-[30%] h-[480px] w-[480px] rounded-full bg-sky-200/40 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-brand/15 hidden md:block blur-[120px]" />
+      <div className="pointer-events-none absolute -left-40 top-[30%] h-[480px] w-[480px] rounded-full bg-sky-200/40 hidden md:block blur-[120px]" />
       {/* 底部淡回白色，和下方服務區塊的漸層背景無縫銜接 */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-white" />
 
@@ -791,7 +819,8 @@ function Hero() {
             <br />
             <span className="bg-linear-to-r from-brand to-[#0b4f8a] bg-clip-text text-transparent">{hero.title[1]}</span>
           </motion.h1>
-          <motion.p className="mt-6 max-w-xl text-[16px] leading-relaxed text-muted md:text-[18px]" {...reveal(0.16)}>
+          {/* 電腦版寬度 544px：斷行剛好落在「產品」「APP，」之後，「客人」不會被拆開 */}
+          <motion.p className="mt-6 max-w-xl text-[17px] leading-relaxed text-muted md:text-[18px] lg:max-w-[544px]" {...reveal(0.16)}>
             {hero.desc}
           </motion.p>
 
@@ -868,7 +897,7 @@ const SECTION_TONES = {
   pricing: ['#eef2fb', '#f6f3fb 50%', '#f4f1f8'],           // 淺藍灰 → 淺紫 → 淺薰衣草
   process: ['#f4f1f8', '#fdf4ee'],                          // 淺薰衣草 → 淺杏
   about: ['#fdf4ee', '#f8f5f0 50%', '#edf6f3'],             // 淺杏 → 米白 → 淺薄荷
-  faq: ['#edf6f3', '#f0f3f8'],                              // 淺薄荷 → 淺灰藍
+  faq: ['#edf6f3', '#ffffff 50%', '#f0f3f8'],               // 淺薄荷 → 白 → 淺灰藍
   contact: ['#f0f3f8', '#fbf3f6 60%', '#ffffff'],           // 淺灰藍 → 淺粉 → 白（接頁尾）
 }
 
@@ -876,20 +905,21 @@ function SectionBg({ tone, blobs = [] }: { tone: keyof typeof SECTION_TONES; blo
   return (
     <>
       <div className="pointer-events-none absolute inset-0" style={{ background: `linear-gradient(180deg, ${SECTION_TONES[tone].join(', ')})` }} />
-      {blobs.map(b => <div key={b} className={`pointer-events-none absolute rounded-full blur-[120px] ${b}`} />)}
+      {blobs.map(b => <div key={b} className={`pointer-events-none absolute rounded-full hidden md:block blur-[120px] ${b}`} />)}
     </>
   )
 }
 
 /* ---------------- Services ---------------- */
 // 六張服務卡片各自的淡色底（主色不重複）
+// 手機版底色與邊框加深一階（-100／-200），電腦版維持原本的淡色（-50／-100）
 const serviceTones = [
-  { card: 'bg-sky-50 border-sky-100 hover:border-sky-300',             icon: 'bg-sky-500/10 text-sky-600 group-hover:bg-sky-500' },
-  { card: 'bg-violet-50 border-violet-100 hover:border-violet-300',    icon: 'bg-violet-500/10 text-violet-600 group-hover:bg-violet-500' },
-  { card: 'bg-emerald-50 border-emerald-100 hover:border-emerald-300', icon: 'bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500' },
-  { card: 'bg-amber-50 border-amber-100 hover:border-amber-300',       icon: 'bg-amber-500/10 text-amber-600 group-hover:bg-amber-500' },
-  { card: 'bg-rose-50 border-rose-100 hover:border-rose-300',          icon: 'bg-rose-500/10 text-rose-600 group-hover:bg-rose-500' },
-  { card: 'bg-indigo-50 border-indigo-100 hover:border-indigo-300',    icon: 'bg-indigo-500/10 text-indigo-600 group-hover:bg-indigo-500' },
+  { card: 'bg-sky-100 border-sky-200 md:bg-sky-50 md:border-sky-100 hover:border-sky-300',                     icon: 'bg-sky-500/10 text-sky-600 group-hover:bg-sky-500' },
+  { card: 'bg-violet-100 border-violet-200 md:bg-violet-50 md:border-violet-100 hover:border-violet-300',      icon: 'bg-violet-500/10 text-violet-600 group-hover:bg-violet-500' },
+  { card: 'bg-emerald-100 border-emerald-200 md:bg-emerald-50 md:border-emerald-100 hover:border-emerald-300', icon: 'bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500' },
+  { card: 'bg-amber-100 border-amber-200 md:bg-amber-50 md:border-amber-100 hover:border-amber-300',           icon: 'bg-amber-500/10 text-amber-600 group-hover:bg-amber-500' },
+  { card: 'bg-rose-100 border-rose-200 md:bg-rose-50 md:border-rose-100 hover:border-rose-300',                icon: 'bg-rose-500/10 text-rose-600 group-hover:bg-rose-500' },
+  { card: 'bg-indigo-100 border-indigo-200 md:bg-indigo-50 md:border-indigo-100 hover:border-indigo-300',      icon: 'bg-indigo-500/10 text-indigo-600 group-hover:bg-indigo-500' },
 ]
 
 function Services() {
@@ -901,7 +931,7 @@ function Services() {
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => (
             <Reveal key={s.title} delay={(i % 3) * 0.08}>
-              <article className={`group h-full rounded-2xl border p-7 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(8,38,66,0.25)] ${serviceTones[i % serviceTones.length].card}`}>
+              <article className={`group h-full rounded-2xl border p-7 md:backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(8,38,66,0.25)] ${serviceTones[i % serviceTones.length].card}`}>
                 <div className="card-head">
                   <span className={`card-icon transition group-hover:text-white ${serviceTones[i % serviceTones.length].icon}`}>
                     <span className="icon">{s.icon}</span>
@@ -929,7 +959,7 @@ function Pricing() {
   return (
     <section id="pricing" className="relative overflow-hidden">
       <SectionBg tone="pricing" blobs={['-right-40 top-1/3 h-[460px] w-[460px] bg-violet-200/25', '-left-40 top-2/3 h-[400px] w-[400px] bg-sky-200/25']} />
-      <div className="section-screen relative py-20 md:py-8">
+      <div className="section-screen relative py-10 md:py-8">
       <div className="container-x">
         <SectionHead eyebrow="Pricing" title={pricingHead.title} desc={pricingHead.desc} />
         {/* 三張卡片在桌機版無間距連成一體：中間那張欄寬較寬、上下各凸出 24px 並疊在最上層（不設 h-full，負 margin 才能撐高）；
@@ -944,7 +974,8 @@ function Pricing() {
                   className={`relative flex h-full flex-col rounded-2xl border p-7 lg:p-8 ${
                     p.featured
                       ? 'border-brand bg-white shadow-[0_32px_64px_-28px_rgba(8,38,66,0.45)] md:py-12 lg:px-10 lg:py-12'
-                      : `border-line bg-white/80 backdrop-blur-sm ${side}`
+                      // 手機版直式閱讀：三張都用與主推方案相同的白底、品牌色邊框與陰影；平板以上才改回淡色
+                      : `border-brand bg-white shadow-[0_32px_64px_-28px_rgba(8,38,66,0.45)] md:border-line md:bg-white/80 md:shadow-none md:backdrop-blur-sm ${side}`
                   }`}
                 >
                   {p.featured && (
@@ -966,7 +997,7 @@ function Pricing() {
                       <span className="text-[24px] font-bold leading-9">{p.price}</span>
                     )}
                   </p>
-                  <p className="mt-4 text-[14px] leading-relaxed text-muted">{p.desc}</p>
+                  <p className="mt-4 text-[17px] leading-relaxed text-muted md:text-[14px]">{p.desc}</p>
                   <ul className="mt-6 flex flex-1 flex-col gap-2.5 border-t border-line pt-6">
                     {p.features.map(f => (
                       <li key={f} className="flex items-start gap-2 text-[15px] text-ink/80">
@@ -1003,8 +1034,8 @@ function Rescue() {
           maskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, #000 20%, transparent 100%)',
         }}
       />
-      <div className="pointer-events-none absolute -right-40 top-1/4 h-[480px] w-[480px] rounded-full bg-violet-400/30 blur-[120px]" />
-      <div className="pointer-events-none absolute -left-40 bottom-0 h-[420px] w-[420px] rounded-full bg-sky-300/25 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-40 top-1/4 h-[480px] w-[480px] rounded-full bg-violet-400/30 hidden md:block blur-[120px]" />
+      <div className="pointer-events-none absolute -left-40 bottom-0 h-[420px] w-[420px] rounded-full bg-sky-300/25 hidden md:block blur-[120px]" />
 
       <div className="container-x relative grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         <Reveal>
@@ -1035,12 +1066,15 @@ function Rescue() {
           {[rescue.cases[0], rescue.cases[1], null, rescue.cases[2], rescue.cases[3]].map((c, i) =>
             c ? (
               <Reveal key={c.title} delay={i * 0.06} className="h-full">
-                <article className="h-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm transition duration-300 hover:border-white/40 hover:bg-white/15">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white">
-                    <span className="icon">{c.icon}</span>
+                {/* 手機版：與白色主要狀況卡同樣的橫式架構與尺寸（底色、邊框、icon 維持半透明白）；sm 以上才改回直式小卡 */}
+                <article className="flex h-full items-center gap-5 rounded-2xl border border-white/20 bg-white/10 p-6 md:backdrop-blur-sm transition duration-300 hover:border-white/40 hover:bg-white/15 sm:block">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white sm:h-11 sm:w-11 sm:rounded-xl">
+                    <span className="icon text-[30px]! sm:text-[24px]!">{c.icon}</span>
                   </span>
-                  <h3 className="mt-4 text-[18px] font-bold">{c.title}</h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-white/75">{c.desc}</p>
+                  <div>
+                    <h3 className="text-[20px] font-bold sm:mt-4 sm:text-[18px]">{c.title}</h3>
+                    <p className="mt-1 text-[17px] leading-relaxed text-white/85 sm:mt-2 sm:text-[14px]">{c.desc}</p>
+                  </div>
                 </article>
               </Reveal>
             ) : (
@@ -1051,7 +1085,7 @@ function Rescue() {
                   </span>
                   <div>
                     <h3 className="text-[20px] font-bold">{rescue.highlight.title}</h3>
-                    <p className="mt-1 text-[15px] leading-relaxed text-muted">{rescue.highlight.desc}</p>
+                    <p className="mt-1 text-[17px] leading-relaxed text-muted md:text-[15px]">{rescue.highlight.desc}</p>
                   </div>
                 </article>
               </Reveal>
@@ -1398,6 +1432,28 @@ const deviceVariants = {
 // 裝置自動輪播間隔：要讓捲動示意（延遲 0.9s＋捲動 3.6s）播完再換下一個
 const DEVICE_SLIDE_MS = 7000
 
+// 友善介面右側的裝置說明文案（隱形佔位版不使用 h2，避免重複標題）
+function DeviceText({ d, heading = false }: { d: (typeof webCard.devices)[number]; heading?: boolean }) {
+  const Title = heading ? 'h2' : 'p'
+  return (
+    <>
+      <p className="text-[14px] font-bold text-brand-dark">{d.role}</p>
+      <Title className="heading mt-2!">
+        {d.title}
+        <br />
+        <span className="bg-linear-to-r from-brand to-violet-500 bg-clip-text text-transparent">{d.accent}</span>
+      </Title>
+      <p className="lead">{d.desc}</p>
+      {/* 以 #標籤 文字呈現，避免看起來像可以點的按鈕 */}
+      <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-1.5">
+        {d.tags.map(t => (
+          <li key={t} className="text-[15px] font-medium text-brand-dark">#{t}</li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
 function WebCard() {
   const { devices } = webCard
   const [index, setIndex] = useState(0)
@@ -1412,6 +1468,29 @@ function WebCard() {
     const timer = setTimeout(() => setIndex(i => (i + 1) % devices.length), DEVICE_SLIDE_MS)
     return () => clearTimeout(timer)
   }, [index, inView, hovered, devices.length])
+
+  // 裝置切換按鈕：電腦版放在右側文字下方，手機／平板版放在裝置畫面下方
+  const deviceTabs = (className: string) => (
+    <div className={`gap-2.5 ${className}`} role="tablist" aria-label="裝置">
+      {devices.map((d, i) => (
+        <button
+          key={d.id}
+          type="button"
+          role="tab"
+          aria-selected={i === index}
+          onClick={() => setIndex(i)}
+          className={`flex h-16 w-16 flex-col items-center justify-center gap-0.5 rounded-lg border text-[12px] font-bold transition duration-300 ${
+            i === index
+              ? 'border-brand bg-brand text-white shadow-[0_12px_24px_-12px_rgba(40,170,214,0.8)]'
+              : 'border-line bg-white text-ink/60 hover:border-brand/40 hover:text-ink'
+          }`}
+        >
+          <Ico name={d.icon} className="text-[26px]!" />
+          {d.label}
+        </button>
+      ))}
+    </div>
+  )
 
   return (
     <section ref={sectionRef} id="card" className="section section-screen relative overflow-hidden">
@@ -1445,59 +1524,43 @@ function WebCard() {
                   </AnimatePresence>
                 </div>
               </div>
+              {deviceTabs('mt-6 flex justify-center lg:hidden')}
+              <div className="mt-6 flex justify-center lg:hidden">
+                <a href="#contact" className="btn btn-primary">
+                  {webCard.cta}
+                  <ArrowRight />
+                </a>
+              </div>
             </div>
 
             {/* 右：這個裝置的說明，下方是裝置切換按鈕與免費諮詢 */}
             <div className="order-1 lg:order-2">
 
-              {/* 固定最小高度：三個裝置的文案行數不同，切換時按鈕位置才不會上下跳 */}
-              <div className="lg:min-h-[20.5rem]">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={current.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35, ease: REVEAL_EASE }}
-                >
-                  <p className="text-[14px] font-bold text-brand-dark">{current.role}</p>
-                  <h2 className="heading mt-2!">
-                    {current.title}
-                    <br />
-                    <span className="bg-linear-to-r from-brand to-violet-500 bg-clip-text text-transparent">{current.accent}</span>
-                  </h2>
-                  <p className="lead">{current.desc}</p>
-                  {/* 以 #標籤 文字呈現，避免看起來像可以點的按鈕 */}
-                  <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-1.5">
-                    {current.tags.map(t => (
-                      <li key={t} className="text-[15px] font-medium text-brand-dark">#{t}</li>
-                    ))}
-                  </ul>
-                </motion.div>
-              </AnimatePresence>
+              {/* 三個裝置的文案行數不同：把三份文案都疊在同一格（隱形）撐出最高的高度，
+                  任何螢幕寬度切換時，下方的裝置畫面與按鈕都不會上下跳 */}
+              <div className="grid">
+                {devices.map(d => (
+                  <div key={d.id} className="invisible [grid-area:1/1]" aria-hidden>
+                    <DeviceText d={d} />
+                  </div>
+                ))}
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={current.id}
+                    className="[grid-area:1/1]"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: REVEAL_EASE }}
+                  >
+                    <DeviceText d={current} heading />
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
-              {/* 裝置切換按鈕＋免費諮詢同一排 */}
-              <div className="mt-9 flex flex-wrap items-center gap-5">
-                <div className="flex gap-2.5" role="tablist" aria-label="裝置">
-                  {devices.map((d, i) => (
-                    <button
-                      key={d.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={i === index}
-                      onClick={() => setIndex(i)}
-                      className={`flex h-16 w-16 flex-col items-center justify-center gap-0.5 rounded-lg border text-[12px] font-bold transition duration-300 ${
-                        i === index
-                          ? 'border-brand bg-brand text-white shadow-[0_12px_24px_-12px_rgba(40,170,214,0.8)]'
-                          : 'border-line bg-white text-ink/60 hover:border-brand/40 hover:text-ink'
-                      }`}
-                    >
-                      <Ico name={d.icon} className="text-[26px]!" />
-                      {d.label}
-                    </button>
-                  ))}
-                </div>
+              {/* 電腦版：裝置切換按鈕＋免費諮詢同一排；手機／平板版這兩個都移到裝置畫面下方 */}
+              <div className="mt-9 hidden flex-wrap items-center gap-5 lg:flex">
+                {deviceTabs('hidden lg:flex')}
                 <a href="#contact" className="btn btn-primary">
                   {webCard.cta}
                   <ArrowRight />
@@ -1543,7 +1606,7 @@ function WorkCard({ w }: { w: Work }) {
           {w.title}
           {w.link && <span className="icon text-[20px]! text-muted transition group-hover:translate-x-1 group-hover:text-brand">arrow_outward</span>}
         </h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-muted">{w.desc}</p>
+        <p className="mt-3 text-[17px] leading-relaxed text-muted md:text-[15px]">{w.desc}</p>
         <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-1 text-[13px] font-medium text-ink/45">
           {w.tech.map(t => <li key={t}>#{t}</li>)}
         </ul>
@@ -1570,7 +1633,8 @@ function Works() {
           </div>
         </div>
 
-        <Reveal className="mt-14">
+        {/* 手機版往右延伸到螢幕邊緣（抵銷 container 的 20px 內距），露出的下一張才會貼齊手機邊界 */}
+        <Reveal className="mt-14 -mr-5 md:mr-0">
           <Swiper
             modules={[Navigation, Pagination, A11y]}
             className="works-swiper"
@@ -1591,7 +1655,7 @@ function Works() {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="works-dots slider-dots mt-8" />
+          <div className="works-dots slider-dots mt-8 mr-5 md:mr-0" />
         </Reveal>
       </div>
     </section>
@@ -1619,7 +1683,7 @@ function Process() {
     // 外層撐滿一個畫面、上下留 48px，灰底區塊填滿其餘高度（從選單點過來時不會看到上下區塊）
     <section id="process" className="section-screen relative overflow-hidden px-3 md:px-6 md:py-12">
       <SectionBg tone="process" blobs={['right-[10%] top-1/3 h-[420px] w-[420px] bg-orange-200/25']} />
-      <div className="relative mx-auto flex w-full max-w-400 flex-1 flex-col justify-center py-24 md:py-36 overflow-hidden rounded-[28px] bg-white/60 backdrop-blur-sm md:rounded-[40px]">
+      <div className="relative mx-auto flex w-full max-w-400 flex-1 flex-col justify-center py-24 md:py-36 overflow-hidden rounded-[28px] bg-white/60 md:backdrop-blur-sm md:rounded-[40px]">
       {/* 淡淡的格線紋理，上下淡出 */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.05]"
@@ -1672,7 +1736,7 @@ function Process() {
                     <div className="pt-1 md:pt-0">
                       <p className="font-display text-[12px] font-semibold tracking-[0.15em] text-brand-dark md:mt-5">STEP {String(i + 1).padStart(2, '0')}</p>
                       <h3 className={`mt-1 text-[21px] font-bold transition-colors duration-300 ${isActive ? 'text-brand' : 'text-ink'}`}>{p.title}</h3>
-                      <p className="mt-2 text-[15px] leading-relaxed text-ink/75">{p.desc}</p>
+                      <p className="mt-2 text-[17px] leading-relaxed text-ink/85 md:text-[15px]">{p.desc}</p>
                     </div>
                   </motion.div>
                 </motion.li>
@@ -1727,12 +1791,13 @@ function About() {
           <SectionHead eyebrow="About" title={about.title} />
           <Reveal delay={0.1}>
             {about.paragraphs.map(p => (
-              <p key={p.slice(0, 10)} className="mt-5 text-[16px] leading-[1.9] text-ink/75">{p}</p>
+              <p key={p.slice(0, 10)} className="mt-5 text-[17px] leading-[1.9] md:text-[16px] text-ink/85">{p}</p>
             ))}
-            <ul className="mt-8 flex flex-wrap gap-2">
+            {/* 手機版一排兩個、寬度均分，字放大；平板以上維持依字數排列 */}
+            <ul className="mt-8 grid grid-cols-2 gap-2 md:flex md:flex-wrap">
               {about.highlights.map(s => (
-                <li key={s} className="flex items-center gap-1 rounded-full border border-line bg-white py-1.5 pl-2.5 pr-3.5 text-[13px] font-medium text-ink/75">
-                  <span className="icon text-[16px]! text-brand">check</span>
+                <li key={s} className="flex items-center gap-1 rounded-full border border-line bg-white py-2 pl-2.5 pr-3.5 text-[15px] font-medium text-ink/75 md:py-1.5 md:text-[13px]">
+                  <span className="icon text-[18px]! text-brand md:text-[16px]!">check</span>
                   {s}
                 </li>
               ))}
@@ -1791,7 +1856,8 @@ function Faq() {
           <FaqDeco />
         </div>
         <Reveal delay={0.1}>
-          <ul className="divide-y divide-line border-y border-line">
+          {/* 手機版分隔線加深才看得清楚 */}
+          <ul className="divide-y divide-ink/20 border-y border-ink/20 md:divide-line md:border-line">
             {faqs.map((f, i) => {
               const open = openIndex === i
               return (
@@ -1803,7 +1869,7 @@ function Faq() {
                     onClick={() => setOpenIndex(open ? null : i)}
                   >
                     <span className="text-[17px] font-bold text-ink">{f.q}</span>
-                    <span className={`icon shrink-0 text-brand transition-transform duration-300 ${open ? 'rotate-45' : ''}`}>add</span>
+                    <span className={`icon shrink-0 text-[32px]! text-brand transition-transform duration-300 md:text-[24px]! ${open ? 'rotate-45' : ''}`}>add</span>
                   </button>
                   <AnimatePresence initial={false}>
                     {open && (
@@ -1814,7 +1880,7 @@ function Faq() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-6 pr-10 text-[15px] leading-relaxed text-muted">{f.a}</p>
+                        <p className="pb-6 pr-10 text-[17px] leading-relaxed text-muted md:text-[15px]">{f.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -1837,7 +1903,7 @@ function Contact() {
         <Reveal>
           <p className="eyebrow">Contact</p>
           <h2 className="heading">{contact.title}</h2>
-          <p className="mt-4 text-[16px] leading-relaxed text-muted">{contact.desc}</p>
+          <p className="mt-4 text-[17px] leading-relaxed text-muted md:text-[16px]">{contact.desc}</p>
           <ul className="mt-10 space-y-6">
             {contact.highlights.map(h => (
               <li key={h.title} className="flex items-start gap-5">
@@ -1849,7 +1915,7 @@ function Contact() {
                     {h.title}
                     {'note' in h && h.note && <span className="ml-1.5 text-[12px] font-normal text-ink/45">{h.note}</span>}
                   </p>
-                  <p className="mt-1 text-[14px] leading-relaxed text-muted">{h.desc}</p>
+                  <p className="mt-1 text-[17px] leading-relaxed text-muted md:text-[14px]">{h.desc}</p>
                 </div>
               </li>
             ))}

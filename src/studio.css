@@ -14,13 +14,17 @@
   --color-brand-dark: #0381ab;
   --color-paper: #f4f7fa;    /* 淺色區塊底 */
   --color-line: #e3e9ef;     /* 分隔線 */
-  --color-muted: #5b6b7b;    /* 次要文字 */
+  --color-muted: #2e3b48;    /* 次要文字（原 #5b6b7b 太淺，描述文案看不清楚，已加深兩次） */
 }
 
 @layer base {
   html {
     /* 平滑捲動與錨點由 Lenis 處理（src/studio/useSmoothScroll.ts），這裡不設 scroll-behavior 以免互相干擾 */
     scroll-padding-top: 4.5rem; /* 鍵盤或原生錨點跳轉時避開固定 header */
+  }
+  /* 觸控裝置不啟動 Lenis，點選單改由瀏覽器原生平滑捲動 */
+  @media (hover: none), (pointer: coarse) {
+    html { scroll-behavior: smooth; }
   }
   body {
     @apply bg-white text-ink font-sans antialiased;
@@ -40,21 +44,22 @@
     @apply mx-auto w-full max-w-300 px-5 md:px-8;
   }
   .section {
-    @apply py-20 md:py-28;
+    @apply py-10 md:py-28;
   }
   /* 主選單會定位到的區塊：電腦／平板版高度至少一個畫面（扣掉固定 header），內容垂直置中。
      點選單定位後，畫面裡只會有這一個區塊，不會露出上下區塊的底色或內容。 */
   .section-screen {
     @apply flex flex-col justify-center md:min-h-[calc(100svh-4.5rem)];
   }
+  /* 大標題上方的英文小字：字距收小；左側內縮 4px，對齊中文標題字形的實際左緣（中文字左邊自帶留白） */
   .eyebrow {
-    @apply font-display text-[13px] font-semibold uppercase tracking-[0.2em] text-brand-dark;
+    @apply font-display pl-1 text-[13px] font-semibold uppercase tracking-[0.1em] text-brand-dark;
   }
   .heading {
-    @apply mt-3 text-[28px] md:text-[40px] font-bold leading-tight tracking-tight text-ink;
+    @apply mt-1.5 text-[28px] md:text-[40px] font-bold leading-tight tracking-tight text-ink;
   }
   .lead {
-    @apply mt-4 text-[15px] md:text-[17px] leading-relaxed text-muted;
+    @apply mt-4 text-[17px] leading-relaxed text-muted;
   }
   .btn {
     --btn-px: 2rem; /* 左右內距，hover 時以此為基準往外延長 */
@@ -108,7 +113,7 @@
     @apply text-[20px] font-bold text-ink;
   }
   .card-desc {
-    @apply mt-3 text-[16px] leading-relaxed text-muted;
+    @apply mt-3 text-[17px] md:text-[16px] leading-relaxed text-muted;
   }
   /* ── 輪播（精選案例） ── */
   /* 卡片 hover 會上浮與出現陰影，上下預留空間避免被裁掉（左右不留，否則會露出下一張的邊） */
@@ -142,7 +147,7 @@
     .about-card { animation: none; }
   }
   .field {
-    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-ink placeholder:text-muted/60 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15;
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[17px] md:text-[15px] text-ink placeholder:text-muted/60 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/15;
   }
   .icon {
     font-family: "Material Symbols Outlined";
