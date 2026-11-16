@@ -335,7 +335,7 @@ export const contact = {
   desc: '想開一間線上小店、加上預約或購物功能，或是舊網站找不到人維護？告訴我們你的狀況，我們幫你挑選合適的方案與預算，諮詢完全免費。',
   // 左側合作特色列表（icon 為 Material Symbols 名稱）
   highlights: [
-    { icon: 'schedule', title: '1 個工作天內回覆', note: '（六日、國定假日除外）', desc: '收到需求後將即時回覆，不讓你的需求空等。' },
+    { icon: 'schedule', title: '快速回覆', desc: '收到需求後會盡快回覆，不讓你的需求空等。' },
     { icon: 'public', title: '全台皆可合作', desc: '線上會議與即時通訊，不論在哪裡，溝通零距離。' },
     { icon: 'deployed_code', title: '一條龍全包辦', desc: '網站、金流、LINE、社群一次整合，原始碼與帳號完整交付。' },
     { icon: 'build', title: '舊網站也能接手', desc: '原廠商不處理或聯絡不上的網站，也可以交給我們整理、修改。' },
