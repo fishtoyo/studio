@@ -979,7 +979,7 @@ function Pricing() {
                   }`}
                 >
                   {p.featured && (
-                    <span className="absolute -top-3 left-7 rounded-full bg-brand px-3 py-1 text-[12px] font-bold text-white lg:left-10">最多人選擇</span>
+                    <span className="absolute -top-3 left-7 rounded-full bg-brand px-3 py-1 text-[12px] font-bold text-white lg:left-10">推薦</span>
                   )}
                   {/* 標籤列固定高度，沒有標籤的卡片也留位，三張的標題與價格才會對齊 */}
                   <div className="mb-3 h-6">
@@ -2051,7 +2051,8 @@ function Contact() {
             )}
           </ul>
         </Reveal>
-        <Reveal delay={0.1} className="text-ink">
+        {/* 右欄做成直向 flex：送出後的成功區塊可以用 my-auto 跟左欄垂直置中 */}
+        <Reveal delay={0.1} className="flex flex-col text-ink">
           <ContactForm />
         </Reveal>
       </div>

@@ -70,12 +70,11 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="flex min-h-105 flex-col items-center justify-center rounded-3xl border border-line bg-white p-10 text-center shadow-[0_30px_60px_-30px_rgba(8,38,66,0.25)]">
+      <div className="my-auto flex min-h-105 flex-col items-center justify-center rounded-3xl border border-line bg-white p-10 text-center shadow-[0_30px_60px_-30px_rgba(8,38,66,0.25)]">
         <span className="icon text-[56px]! text-brand">mark_email_read</span>
         <h3 className="mt-4 text-[22px] font-bold">已收到你的訊息！</h3>
         <p className="mt-2 text-muted">
-          我們會在 {studio.responseTime}，請留意你的信箱。
-          <br /><span className="text-[13px] text-muted/80">{studio.responseNote}</span>
+          我們會盡快與你聯絡，請留意你的信箱。
           {isPreview && <><br /><span className="text-[13px] text-amber-600">（目前為預覽模式，表單尚未實際寄出）</span></>}
         </p>
         <button type="button" onClick={() => setStatus('idle')} className="btn btn-outline mt-8">
