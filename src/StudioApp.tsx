@@ -2033,10 +2033,7 @@ function Contact() {
                   <span className="icon text-[30px]! text-brand">{h.icon}</span>
                 </span>
                 <div className="pt-1">
-                  <p className="text-[17px] font-bold text-ink">
-                    {h.title}
-                    {'note' in h && h.note && <span className="ml-1.5 text-[12px] font-normal text-ink/45">{h.note}</span>}
-                  </p>
+                  <p className="text-[17px] font-bold text-ink">{h.title}</p>
                   <p className="mt-1 text-[17px] leading-relaxed text-muted md:text-[14px]">{h.desc}</p>
                 </div>
               </li>
