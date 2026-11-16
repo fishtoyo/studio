@@ -1,0 +1,110 @@
+<!--
+  EmailJS 樣板 1：通知信（寄給工作室）
+  使用方式：EmailJS 後台 → Email Templates → 新增 → Content 切到「Code」模式，整段貼上
+  Subject 欄位填：【Fish Digital Studio】新的合作詢問：{{name}}
+  Reply To 欄位填：{{email}}
+  變數：{{name}} {{company}} {{email}} {{phone}} {{services}} {{budget}} {{message}} {{submitted_at}}
+  信件排版用 table＋inline style，Gmail、Outlook、手機郵件 App 都能正常顯示
+-->
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>新的合作詢問</title>
+</head>
+<body style="margin:0;padding:0;background-color:#eef2f6;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#eef2f6;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;font-family:'PingFang TC','Microsoft JhengHei','Noto Sans TC',Helvetica,Arial,sans-serif;">
+
+          <!-- 頂部品牌列 -->
+          <tr>
+            <td bgcolor="#0c3862" style="background-color:#0c3862;background-image:linear-gradient(135deg,#082642 0%,#0c3862 45%,#0381ab 100%);border-radius:16px 16px 0 0;padding:28px 32px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <span style="font-family:'Quicksand',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;letter-spacing:1px;color:#ffffff;vertical-align:middle;">FISH</span>
+                    <span style="display:inline-block;vertical-align:middle;margin-left:6px;font-family:'Quicksand',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;line-height:12px;letter-spacing:1px;color:#ffffff;">DIGITAL<br />STUDIO</span>
+                  </td>
+                  <td align="right" style="vertical-align:middle;">
+                    <span style="display:inline-block;padding:6px 12px;border-radius:999px;background-color:rgba(255,255,255,0.16);font-size:12px;font-weight:700;color:#ffffff;">網站表單</span>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:28px 0 0;font-size:24px;font-weight:700;line-height:1.4;color:#ffffff;">新的合作詢問 ✉️</p>
+              <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#cfe6f3;">{{name}} 剛剛透過網站送出了需求　·　{{submitted_at}}</p>
+            </td>
+          </tr>
+
+          <!-- 主要內容 -->
+          <tr>
+            <td bgcolor="#ffffff" style="background-color:#ffffff;padding:32px;">
+
+              <!-- 重點：方案與預算、需求類型 -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f0f8fc;border:1px solid #cde8f4;border-radius:12px;">
+                <tr>
+                  <td style="padding:18px 20px;">
+                    <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:1px;color:#0381ab;">方案與預算</p>
+                    <p style="margin:6px 0 0;font-size:18px;font-weight:700;line-height:1.5;color:#0b1b2b;">{{budget}}</p>
+                    <p style="margin:16px 0 0;font-size:12px;font-weight:700;letter-spacing:1px;color:#0381ab;">需求類型</p>
+                    <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#0b1b2b;">{{services}}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- 聯絡資料 -->
+              <p style="margin:28px 0 10px;font-size:13px;font-weight:700;letter-spacing:1px;color:#5b6b7b;">聯絡資料</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #e3e9ef;">
+                <tr>
+                  <td width="110" style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:14px;color:#5b6b7b;">姓名</td>
+                  <td style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:15px;font-weight:700;color:#0b1b2b;">{{name}}</td>
+                </tr>
+                <tr>
+                  <td width="110" style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:14px;color:#5b6b7b;">公司／品牌</td>
+                  <td style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:15px;color:#0b1b2b;">{{company}}</td>
+                </tr>
+                <tr>
+                  <td width="110" style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:14px;color:#5b6b7b;">Email</td>
+                  <td style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:15px;"><a href="mailto:{{email}}" style="color:#0381ab;text-decoration:none;">{{email}}</a></td>
+                </tr>
+                <tr>
+                  <td width="110" style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:14px;color:#5b6b7b;">電話／LINE</td>
+                  <td style="padding:12px 0;border-bottom:1px solid #e3e9ef;font-size:15px;color:#0b1b2b;">{{phone}}</td>
+                </tr>
+              </table>
+
+              <!-- 需求說明 -->
+              <p style="margin:28px 0 10px;font-size:13px;font-weight:700;letter-spacing:1px;color:#5b6b7b;">需求說明</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f6f8fa;border-left:4px solid #009bd0;border-radius:0 10px 10px 0;">
+                <tr>
+                  <td style="padding:16px 20px;font-size:15px;line-height:1.8;color:#0b1b2b;white-space:pre-wrap;">{{message}}</td>
+                </tr>
+              </table>
+
+              <!-- 回覆按鈕 -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:32px 0 0;">
+                <tr>
+                  <td bgcolor="#009bd0" style="background-color:#009bd0;border-radius:999px;">
+                    <a href="mailto:{{email}}?subject=Re%3A%20%E3%80%90Fish%20Digital%20Studio%E3%80%91%E5%90%88%E4%BD%9C%E8%A9%A2%E5%95%8F" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">回覆 {{name}} →</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:12px 0 0;font-size:13px;line-height:1.6;color:#5b6b7b;">也可以直接按郵件的「回覆」，會寄給對方。</p>
+            </td>
+          </tr>
+
+          <!-- 頁尾 -->
+          <tr>
+            <td bgcolor="#f6f8fa" style="background-color:#f6f8fa;border-top:1px solid #e3e9ef;border-radius:0 0 16px 16px;padding:18px 32px;font-size:12px;line-height:1.6;color:#8a97a5;">
+              此信由 Fish Digital Studio 網站表單自動寄出。
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

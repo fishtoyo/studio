@@ -1,0 +1,96 @@
+<!--
+  EmailJS 樣板 2：自動回覆（寄給填表的客人）
+  使用方式：EmailJS 後台 → Email Templates → 新增 → Content 切到「Code」模式，整段貼上
+  To Email 欄位填：{{email}}
+  Subject 欄位填：【Fish Digital Studio】已收到你的需求，我們會盡快回覆
+  變數：{{name}} {{services}} {{budget}} {{message}}
+-->
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>已收到你的需求</title>
+</head>
+<body style="margin:0;padding:0;background-color:#eef2f6;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#eef2f6;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;font-family:'PingFang TC','Microsoft JhengHei','Noto Sans TC',Helvetica,Arial,sans-serif;">
+
+          <!-- 頂部品牌列 -->
+          <tr>
+            <td bgcolor="#0c3862" style="background-color:#0c3862;background-image:linear-gradient(135deg,#082642 0%,#0c3862 45%,#0381ab 100%);border-radius:16px 16px 0 0;padding:28px 32px;">
+              <span style="font-family:'Quicksand',Helvetica,Arial,sans-serif;font-size:26px;font-weight:700;letter-spacing:1px;color:#ffffff;vertical-align:middle;">FISH</span>
+              <span style="display:inline-block;vertical-align:middle;margin-left:6px;font-family:'Quicksand',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;line-height:12px;letter-spacing:1px;color:#ffffff;">DIGITAL<br />STUDIO</span>
+              <p style="margin:28px 0 0;font-size:24px;font-weight:700;line-height:1.4;color:#ffffff;">已收到你的需求 🙌</p>
+              <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#cfe6f3;">感謝你的詢問，我們會盡快與你聯絡。</p>
+            </td>
+          </tr>
+
+          <!-- 主要內容 -->
+          <tr>
+            <td bgcolor="#ffffff" style="background-color:#ffffff;padding:32px;">
+              <p style="margin:0;font-size:16px;font-weight:700;line-height:1.8;color:#0b1b2b;">{{name}} 你好：</p>
+              <p style="margin:12px 0 0;font-size:15px;line-height:1.9;color:#2e3b48;">
+                謝謝你填寫 Fish Digital Studio 的需求表單！我們已經收到你的資料，會盡快與你聯絡。
+                如果有任何想補充的內容，直接回覆這封信就可以了。
+              </p>
+
+              <!-- 你填寫的內容 -->
+              <p style="margin:28px 0 10px;font-size:13px;font-weight:700;letter-spacing:1px;color:#5b6b7b;">你填寫的內容</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f6f8fa;border:1px solid #e3e9ef;border-radius:12px;">
+                <tr>
+                  <td style="padding:18px 20px;">
+                    <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:1px;color:#0381ab;">需求類型</p>
+                    <p style="margin:4px 0 0;font-size:15px;line-height:1.6;color:#0b1b2b;">{{services}}</p>
+                    <p style="margin:14px 0 0;font-size:12px;font-weight:700;letter-spacing:1px;color:#0381ab;">方案與預算</p>
+                    <p style="margin:4px 0 0;font-size:15px;line-height:1.6;color:#0b1b2b;">{{budget}}</p>
+                    <p style="margin:14px 0 0;font-size:12px;font-weight:700;letter-spacing:1px;color:#0381ab;">需求說明</p>
+                    <p style="margin:4px 0 0;font-size:15px;line-height:1.8;color:#0b1b2b;white-space:pre-wrap;">{{message}}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- 接下來的流程 -->
+              <p style="margin:28px 0 10px;font-size:13px;font-weight:700;letter-spacing:1px;color:#5b6b7b;">接下來會這樣進行</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="36" valign="top" style="padding:6px 0;"><span style="display:inline-block;width:26px;height:26px;border-radius:50%;background-color:#009bd0;color:#ffffff;font-size:13px;font-weight:700;line-height:26px;text-align:center;">1</span></td>
+                  <td style="padding:6px 0;font-size:15px;line-height:26px;color:#0b1b2b;">我們詳讀你的需求，必要時以 Email 或電話聯絡確認細節</td>
+                </tr>
+                <tr>
+                  <td width="36" valign="top" style="padding:6px 0;"><span style="display:inline-block;width:26px;height:26px;border-radius:50%;background-color:#009bd0;color:#ffffff;font-size:13px;font-weight:700;line-height:26px;text-align:center;">2</span></td>
+                  <td style="padding:6px 0;font-size:15px;line-height:26px;color:#0b1b2b;">提供建議方案與報價，諮詢完全免費</td>
+                </tr>
+                <tr>
+                  <td width="36" valign="top" style="padding:6px 0;"><span style="display:inline-block;width:26px;height:26px;border-radius:50%;background-color:#009bd0;color:#ffffff;font-size:13px;font-weight:700;line-height:26px;text-align:center;">3</span></td>
+                  <td style="padding:6px 0;font-size:15px;line-height:26px;color:#0b1b2b;">確認合作後開始製作，快速完成上線</td>
+                </tr>
+              </table>
+
+              <!-- 看網站按鈕 -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:32px 0 0;">
+                <tr>
+                  <td bgcolor="#009bd0" style="background-color:#009bd0;border-radius:999px;">
+                    <a href="https://fishtoyo.github.io/studio/" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;">看看收費方案與案例 →</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- 頁尾 -->
+          <tr>
+            <td bgcolor="#f6f8fa" style="background-color:#f6f8fa;border-top:1px solid #e3e9ef;border-radius:0 0 16px 16px;padding:18px 32px;font-size:12px;line-height:1.7;color:#8a97a5;">
+              Fish Digital Studio　·　網站、金流、LINE 一條龍工作室<br />
+              這封信是系統自動寄出的確認信，直接回覆即可與我們聯絡。
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

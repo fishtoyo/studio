@@ -3,11 +3,22 @@ import { contact, studio } from '../content'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
-// 靜態網站表單：透過 Web3Forms 轉寄到信箱，不需要自己的後端
+// 透過 EmailJS REST API 寄出一封樣板信
+const sendEmail = async (templateId: string, params: Record<string, string>) => {
+  const { serviceId, publicKey } = studio.emailjs
+  const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ service_id: serviceId, template_id: templateId, user_id: publicKey, template_params: params }),
+  })
+  if (!res.ok) throw new Error(await res.text())
+}
+
+// 靜態網站表單：透過 EmailJS 用工作室的 Gmail 寄信，不需要自己的後端
 export function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [services, setServices] = useState<string[]>([])
-  const isPreview = !studio.formAccessKey
+  const isPreview = !studio.emailjs.publicKey
 
   const toggleService = (s: string) =>
     setServices(prev => (prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]))
@@ -31,21 +42,27 @@ export function ContactForm() {
       return
     }
 
-    data.set('access_key', studio.formAccessKey)
-    data.set('subject', `【${studio.name}】新的合作詢問：${data.get('name')}`)
-    data.set('from_name', studio.name)
-    data.set('需求類型', services.join('、') || '未選擇')
+    // 樣板變數（對應 email-templates/ 裡的 {{name}}、{{email}}…）
+    const str = (k: string) => String(data.get(k) ?? '').trim()
+    const params = {
+      name: str('name'),
+      company: str('company') || '（未填）',
+      email: str('email'),
+      phone: str('phone') || '（未填）',
+      services: services.join('、') || '未選擇',
+      budget: str('budget'),
+      message: str('message'),
+      submitted_at: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false }),
+    }
 
     try {
-      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
-      const json = await res.json()
-      if (json.success) {
-        setStatus('success')
-        form.reset()
-        setServices([])
-      } else {
-        setStatus('error')
-      }
+      // 通知信一定要寄成功才算送出成功
+      await sendEmail(studio.emailjs.notifyTemplateId, params)
+      // 自動回覆失敗（例如客人信箱打錯）不影響結果，需求已經送到工作室
+      await sendEmail(studio.emailjs.autoReplyTemplateId, params).catch(() => {})
+      setStatus('success')
+      form.reset()
+      setServices([])
     } catch {
       setStatus('error')
     }

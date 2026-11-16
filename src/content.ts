@@ -8,9 +8,14 @@ export const studio = {
   location: '全台服務',
   responseTime: '1 個工作天內回覆',
   responseNote: '（六日、國定假日除外）',
-  // Web3Forms access key（https://web3forms.com 免費申請，填入 Email 即可取得）
-  // 留空時表單為「預覽模式」，不會真的送出
-  formAccessKey: '',
+  // 表單寄信：EmailJS（用連結的 Gmail 寄出，信件樣板在 email-templates/，貼在 EmailJS 後台）
+  // 這幾個值本來就是公開在前端使用的；publicKey 留空時表單為「預覽模式」，不會真的送出
+  emailjs: {
+    serviceId: 'service_f0hma9s',
+    notifyTemplateId: 'template_uziog3r',     // 通知信（寄給工作室）
+    autoReplyTemplateId: 'template_g5kq77p',  // 自動回覆（寄給填表的客人）
+    publicKey: 'BvmXAJUJ8jkwWtqWp',
+  },
 }
 
 export const nav = [

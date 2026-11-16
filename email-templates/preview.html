@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>信件樣板預覽</title>
+  <!-- 只在本機開發伺服器預覽用（不會被打包上線）：把兩份 EmailJS 樣板套上範例資料並排顯示 -->
+  <style>
+    :root { --bg: #d9e1e8; --ink: #0b1b2b; --line: #c4ced8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+    header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 24px; background: #fff; border-bottom: 1px solid var(--line); }
+    h1 { margin: 0; font-size: 18px; }
+    .toggle { display: flex; gap: 6px; }
+    .toggle button { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: 14px; cursor: pointer; }
+    .toggle button.on { background: #009bd0; border-color: #009bd0; color: #fff; }
+    main { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; padding: 24px 16px 48px; }
+    figure { margin: 0; }
+    figcaption { margin-bottom: 10px; font-size: 14px; font-weight: 700; }
+    figcaption small { display: block; margin-top: 2px; font-weight: 400; color: #4a5a6a; }
+    iframe { display: block; width: 680px; max-width: calc(100vw - 32px); height: 1100px; border: 1px solid var(--line); border-radius: 12px; background: #fff; transition: width .3s; }
+    body.mobile iframe { width: 390px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EmailJS 信件樣板預覽（範例資料）</h1>
+    <div class="toggle">
+      <button type="button" class="on" data-mode="desktop">電腦寬度</button>
+      <button type="button" data-mode="mobile">手機寬度</button>
+    </div>
+  </header>
+  <main>
+    <figure>
+      <figcaption>① 通知信 <small>寄給你：有人送出表單時收到</small></figcaption>
+      <iframe id="notify" title="通知信預覽"></iframe>
+    </figure>
+    <figure>
+      <figcaption>② 自動回覆 <small>寄給客人：送出後立刻收到的確認信</small></figcaption>
+      <iframe id="reply" title="自動回覆預覽"></iframe>
+    </figure>
+  </main>
+  <script>
+    const sample = {
+      name: '王小明',
+      company: '小明手作烘焙',
+      email: 'customer@example.com',
+      phone: '0912-345-678',
+      services: '購物網站／金流、LINE 官方帳號',
+      budget: '商品販售方案（NT$16,999）',
+      message: '目前在 IG 接單，想做一個可以線上下單、刷卡付款的網站。\n希望客人加 LINE 好友後也能直接看到新品，預計明年 3 月前上線。',
+      submitted_at: '2026/11/13 15:42',
+    }
+    const fill = html => html.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k) => sample[k] ?? '')
+    const load = async (file, id) => {
+      const html = await (await fetch(file)).text()
+      document.getElementById(id).srcdoc = fill(html)
+    }
+    load('notify.html', 'notify')
+    load('auto-reply.html', 'reply')
+    document.querySelectorAll('.toggle button').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.toggle button').forEach(x => x.classList.toggle('on', x === b))
+      document.body.classList.toggle('mobile', b.dataset.mode === 'mobile')
+    }))
+  </script>
+</body>
+</html>
